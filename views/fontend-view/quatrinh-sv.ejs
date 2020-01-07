@@ -1,0 +1,159 @@
+<section class="content-with-menu content-with-menu-has-toolbar media-gallery">
+	<div class="content-with-menu-container">
+		<div class="inner-body mg-main">
+			<div class="inner-toolbar clearfix">
+				<ul>
+					<li class="right" data-sort-source data-sort-id="media-gallery">
+						<ul class="nav nav-pills nav-pills-primary">
+							<li>
+								<label>Lọc trạng thái:</label>
+							</li>
+							<select class="select" name="forma" onchange="location = this.value;">
+									<option data-option-value="*" value="#*">Tất cả</option>
+									<% subject.forEach(function(row){  %>
+										<option data-option-value="status<%= row.status %>" value="#status<%= row.status %>" >
+										<%if (row.status == 1) { %>
+											Đã học xong
+							            <% } %>
+
+							            <%if (row.status == 2) { %>
+							            	Chưa học
+							            <% } %>
+
+							            <%if (row.status == 3) { %>
+							              	Đang học
+							            <% } %>
+
+							            <%if (row.status == 4) { %>
+							              	Học lại
+							            <% } %>
+										</option>
+									<% }); %>
+							</select>
+						</ul>
+					</li>
+					<li data-sort-source data-sort-id="media-gallery">
+						<ul class="nav nav-pills nav-pills-primary">
+							<li>
+								<label>Lọc học kỳ:</label>
+							</li>
+							<select class="select" name="forma" onchange="location = this.value;">
+									<option data-option-value="*" value="#">Tất cả</option>
+									<% subject.forEach(function(row){  %>
+										<option data-option-value="lv<%= row.Level %>" value="#lv<%= row.Level %>" >Học kỳ <%= row.Level %></option>
+									<% }); %>
+							</select>
+						</ul>
+					</li>
+				</ul>
+			</div>
+			<div class="row">
+				<h1>Tiến trình: </h1>
+				<div class="col-md-6">
+					<section class="panel">
+						<div class="panel-body">
+
+							<div class="progress progress-striped light active m-md">
+								<div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%;">
+									Học kỳ 1 - 80%
+								</div>
+							</div>
+
+							<div class="progress progress-striped light active m-md">
+								<div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
+									Học kỳ 2 - 60%
+								</div>
+							</div>
+
+							<div class="progress progress-striped light active m-md">
+								<div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
+									Học kỳ 3 - 60%
+								</div>
+							</div>
+
+							<div class="progress progress-striped light active m-md">
+								<div class="progress-bar progress-bar-dark" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
+									Học kỳ 4 - 60%
+								</div>
+							</div>
+						</div>
+					</section>
+				</div>
+				<div class="col-md-6">
+					<section class="panel">
+						<div class="panel-body">
+							<div class="progress progress-striped light active m-md">
+								<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
+									Học kỳ 5 - 60%
+								</div>
+							</div>
+
+							<div class="progress progress-striped light active m-md">
+								<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
+									Học kỳ 6 - 60%
+								</div>
+							</div>
+
+							<div class="progress progress-striped light active m-md">
+								<div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
+									Học kỳ 7 - 60%
+								</div>
+							</div>
+
+							<div class="progress progress-striped light active m-md">
+								<div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
+									Học kỳ 8 - 60%
+								</div>
+							</div>
+
+						</div>
+					</section>
+				</div>
+			</div>
+
+			<h1> Danh sách học phần : </h1>
+			<div class="row mg-files" data-sort-destination data-sort-id="media-gallery">
+
+				<% subject.forEach(function(row){  %>
+				<div class="isotope-item lv<%= row.Level %> status<%= row.status %> col-sm-6 col-md-4 col-lg-3">
+					<div class="thumbnail">
+						<h5 class="mg-title text-semibold"><b><%= row.NameClass %></b><small></small></h5>
+						<br>
+						<h3><b>Tên học phần :</b> <%= row.NameSubject %><small></small></h3>
+						<h4><b>Học kỳ <%= row.Level %></h4>
+						<hr>
+						<div class="mg-description">
+							<%if (row.status == 1) { %>
+								<small class="pull-left text-muted">Trạng thái :<i style="color: green">Đã học xong</i></small>
+				            <% } %>
+
+				            <%if (row.status == 2) { %>
+				            	<small class="pull-left text-muted">Trạng thái :<i style="color: black">Chưa học</i></small>
+				            <% } %>
+
+				            <%if (row.status == 3) { %>
+				              	<small class="pull-left text-muted">Trạng thái :<i style="color: blue">Đang học</i></small>
+				            <% } %>
+
+				            <%if (row.status == 4) { %>
+				              	<small class="pull-left text-muted">Trạng thái :<i style="color: red">Học lại</i></small>
+				            <% } %>
+						</div>
+					</div>
+				</div>
+				<% }); %>
+
+			</div>
+		</div>
+	</div>
+</section>
+
+<script>
+var map = {};
+$('select option').each(function () {
+    if (map[this.value]) {
+        $(this).remove()
+    }
+    map[this.value] = true;
+})
+</script>

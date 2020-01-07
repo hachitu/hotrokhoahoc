@@ -1,0 +1,320 @@
+	<header class="page-header">
+		<h2>Diễn đàn hỗ trợ học phần</h2>
+
+		<div class="right-wrapper pull-right">
+			<ol class="breadcrumbs">
+				<li>
+					<a href="index.html">
+						<i class="fa fa-home"></i>
+					</a>
+				</li>
+				<li><span>Trang chủ</span></li>
+				<li><a href="/khoahochientai"><span>Khóa học hiện tại</span></a></li>
+				<li><a href="/diendan/<%= ID_Classmodule %>"><span>Diễn đàn</span></a></li>
+			</ol>
+
+			<a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
+		</div>
+	</header>
+
+	<!-- start: page -->
+	<section class="content-with-menu mailbox">
+		<div class="content-with-menu-container" data-mailbox data-mailbox-view="email">
+			<div class="inner-body mailbox-email">
+				<div class="mailbox-email-header mb-lg">
+
+					<% if(Type == '1'){ %>
+					<h1 class="mailbox-email-subject text-center">
+						<i class="fa fa-bell"></i> -
+						<b><%= Tittle %></b>
+					</h1>
+					<% } %>
+					<% if(Type == '3'){ %>
+					<h1 class="mailbox-email-subject text-center">
+						<i class="fa fa-comments-o"></i> -
+						<b><%= Tittle %></b>
+					</h1>
+					<% } %>
+					<% if(Type == '2'){ %>
+					<h1 class="mailbox-email-subject text-center">
+						<i class="fa fa-question"></i> -
+						<b><%= Tittle %></b>
+					</h1>
+					<% } %>
+
+					<p class="mt-lg mb-none text-md text-center" >Đăng bởi <a href="#"><b><%= Name %></b></a>, Thời gian đăng : <%= Time %></p>
+
+				</div>
+				<div class="mailbox-email-container">
+					<div class="mailbox-email-screen">
+						<% dem = 0; %>
+						<% comment.forEach(function(rows){ %>
+						<% dem++; %>
+						<div class="panel">
+							<div class="panel-heading">
+								<div class="panel-actions">
+									<% if(rows.ID_Account_Comment == user[0].ID_Account && dem > 1) { %>
+										<a href="javascript:{}" onclick="Submit(<%= rows.ID_Comment %>);"><i class="mail-label fa fa-times"></i></a>
+									<% }; %>
+									<form id="DELETE<%= rows.ID_Comment %>" action="/comment/delete/<%= rows.ID_Comment %>" method="post">
+										<input type="text" name="ID_Classmodule" hidden="hidden" value="<%= ID_Classmodule %>">
+										<input type="text" name="ID_Topic" hidden="hidden" value="<%= ID_Topic %>">
+									</form>
+									<script>
+										function Submit(ID_Comment){
+											var r = confirm("Bạn có thực sự muốn xóa bình luận này của mình ? File đính kèm và hình ảnh cũng sẽ bị xóa !!!");
+
+											if (r==true) {
+												document.getElementById('DELETE'+ID_Comment).submit();
+											}else{
+
+											}
+										}
+									</script>
+									<!-- <a href="#" class="fa fa-caret-down"></a> -->
+									<!-- <a href="#" class="fa fa-times"></a> -->
+									<!-- <a href="#" class="fa fa-mail-reply-all"></a> -->
+									<!-- <a href="#" class="fa fa-star-o"></a> -->
+								</div>
+
+								<p class="panel-title">
+									<img id="imgcmt" src="../../img/<%= rows.Avatar %>"></i><b> - <%= rows.Name %></b>
+								</p>
+
+							</div>
+							<div class="panel-body">
+								<div class="row">
+									<% __append(rows.ContentComment) %>
+								</div>
+								<br>
+								<% file.forEach(function(fil){ %>
+									<% if(fil.id_cmt == rows.ID_Comment){ %>
+									<div class="col-md-3">
+										<section class="panel panel-featured-left panel-featured-primary">
+											<div class="panel-body">
+												<div class="widget-summary widget-summary-sm">
+													<div class="widget-summary-col widget-summary-col-icon">
+														<div class="summary-icon bg-primary">
+															<i class="fa fa-file-archive-o"></i>
+														</div>
+													</div>
+													<div class="widget-summary-col">
+														<div class="summary">
+															<div class="info">
+																<strong class="amount"><%= fil.name_file %></strong>
+															</div>
+															<a href="../../files/<%= fil.url_file %>"><h4 class="title text-primary">Download</h4></a>
+
+														</div>
+														<div class="summary-footer">
+															<a class="text-muted text-uppercase">(view all)</a>
+														</div>
+													</div>
+												</div>
+											</div>
+										</section>
+									</div>
+									<% } %>
+								<% }); %>
+							</div>
+							<div class="panel-footer">
+								<p class="m-none"><small><%= rows.Time %></small></p>
+							</div>
+						</div>
+						<% }); %>
+
+						<!-- <div class="panel">
+							<div class="panel-heading">
+								<div class="panel-actions">
+									<a href="#" class="fa fa-caret-down"></a>
+									<a href="#" class="fa fa-mail-reply"></a>
+									<a href="#" class="fa fa-mail-reply-all"></a>
+									<a href="#" class="fa fa-star-o"></a>
+								</div>
+
+								<p class="panel-title">
+									<img id="imgcmt" src="https://vcdn-ione.vnecdn.net/2019/02/16/Amme1-1550288093_680x0.jpg" ><i class="fa fa-angle-right fa-fw"></i>Okler Themes
+								</p>
+
+							</div>
+							<div class="panel-body">
+								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer volutpat nulla et sollicitudin volutpat. Suspendisse consequat massa et varius tincidunt. In quis velit et enim posuere consectetur at et erat. Praesent condimentum ipsum non ligula tempor cursus. Maecenas ornare vitae nibh blandit suscipit. Nulla suscipit mollis dui vitae porttitor. Nulla faucibus neque leo. Sed tincidunt enim sit amet tellus bibendum consectetur. Nunc lobortis metus posuere adipiscing auctor. Duis ante ipsum, malesuada eu risus vitae, mattis dapibus arcu. Nullam metus dui, fermentum dictum nulla id, gravida dignissim eros.</p>
+
+								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer volutpat nulla et sollicitudin volutpat. Suspendisse consequat massa et varius tincidunt. In quis velit et enim posuere consectetur at et erat. Praesent condimentum ipsum non ligula tempor cursus. Maecenas ornare vitae nibh blandit suscipit. Nulla suscipit mollis dui vitae porttitor. Nulla faucibus neque leo. Sed tincidunt enim sit amet tellus bibendum consectetur. Nunc lobortis metus posuere adipiscing auctor. Duis ante ipsum, malesuada eu risus vitae, mattis dapibus arcu. Nullam metus dui, fermentum dictum nulla id, gravida dignissim eros.</p>
+								<div class="col-md-3">
+									<section class="panel panel-featured-left panel-featured-primary">
+										<div class="panel-body">
+											<div class="widget-summary widget-summary-sm">
+												<div class="widget-summary-col widget-summary-col-icon">
+													<div class="summary-icon bg-primary">
+														<i class="fa fa-file-archive-o"></i>
+													</div>
+												</div>
+												<div class="widget-summary-col">
+													<div class="summary">
+														<div class="info">
+															<strong class="amount">Tên file đính kèm</strong>
+														</div>
+														<h4 class="title text-primary">Tải xuống</h4>
+
+													</div>
+													<div class="summary-footer">
+														<a class="text-muted text-uppercase">(view all)</a>
+													</div>
+												</div>
+											</div>
+										</div>
+									</section>
+								</div>
+							</div>
+							<div class="panel-footer">
+								<p class="m-none"><small>July 07, 2014. 9:51pm</small></p>
+							</div>
+						</div> -->
+
+					</div>
+					<% if(Status!=1) { %>
+					<form action="/diendan/addcomment" method="post" enctype="multipart/form-data">
+						<div class="TruongThiHaTrang-form" id="compose" >
+							<label for="cc" class="control-label-invisible"><h3><b>Thêm bình luận</b></h3></label>
+							<div class="compose">
+								<textarea required name="content" id="content"></textarea>
+								<script>
+									// CKEDITOR.replace( 'content', {
+									// 	height: 300,
+									// });
+									var editor = CKEDITOR.replace( 'content', {
+									    height: 300,
+									    extraPlugins: 'notification'
+									});
+
+									editor.on( 'required', function( evt ) {
+									    editor.showNotification( 'Nội dung bình luận không được để trống .', 'warning' );
+									    evt.cancel();
+									} );
+
+								</script>
+							</div>
+							<label for=""><h4><b>File đính kèm :</b></h4></label> <input class="" type="file" name="myFiles" multiple>
+
+							<input type="text" name="ID_Classmodule" hidden="hidden" value="<%= ID_Classmodule %>">
+							<input type="text" name="ID_Topic" hidden="hidden" value="<%= ID_Topic %>">
+							<div class="text-center mt-md">
+								<input type="submit" class="btn btn-lg btn-success" value="BÌNH LUẬN">
+							</div>
+						</div>
+					</form>
+					<% } %>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- end: page -->
+</section>
+</div>
+
+<aside id="sidebar-right" class="sidebar-right">
+	<div class="nano">
+		<div class="nano-content">
+			<a href="#" class="mobile-close visible-xs">
+				Collapse <i class="fa fa-chevron-right"></i>
+			</a>
+
+			<div class="sidebar-right-wrapper">
+
+				<div class="sidebar-widget widget-calendar">
+					<h6>Upcoming Tasks</h6>
+					<div data-plugin-datepicker data-plugin-skin="dark" ></div>
+
+					<ul>
+						<li>
+							<time datetime="2014-04-19T00:00+00:00">04/19/2014</time>
+							<span>Company Meeting</span>
+						</li>
+					</ul>
+				</div>
+
+				<div class="sidebar-widget widget-friends">
+					<h6>Friends</h6>
+					<ul>
+						<li class="status-online">
+							<figure class="profile-picture">
+								<img src="assets/images/!sample-user.jpg" alt="Joseph Doe" class="img-circle">
+							</figure>
+							<div class="profile-info">
+								<span class="name">Joseph Doe Junior</span>
+								<span class="title">Hey, how are you?</span>
+							</div>
+						</li>
+						<li class="status-online">
+							<figure class="profile-picture">
+								<img src="assets/images/!sample-user.jpg" alt="Joseph Doe" class="img-circle">
+							</figure>
+							<div class="profile-info">
+								<span class="name">Joseph Doe Junior</span>
+								<span class="title">Hey, how are you?</span>
+							</div>
+						</li>
+						<li class="status-offline">
+							<figure class="profile-picture">
+								<img src="assets/images/!sample-user.jpg" alt="Joseph Doe" class="img-circle">
+							</figure>
+							<div class="profile-info">
+								<span class="name">Joseph Doe Junior</span>
+								<span class="title">Hey, how are you?</span>
+							</div>
+						</li>
+						<li class="status-offline">
+							<figure class="profile-picture">
+								<img src="assets/images/!sample-user.jpg" alt="Joseph Doe" class="img-circle">
+							</figure>
+							<div class="profile-info">
+								<span class="name">Joseph Doe Junior</span>
+								<span class="title">Hey, how are you?</span>
+							</div>
+						</li>
+					</ul>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</aside>
+
+<button onclick="topFunction()" id="CrollTop" title="Go to top">
+	<i class="fa fa-chevron-circle-up"></i>
+</button>
+
+<button onclick="window.location.href='#compose'" id="CrollComment" title="Go to Comment">
+	<i class="fa fa-comments"></i>
+</button>
+
+<script>
+// When the user scrolls down 20px from the top of the document, show the button
+window.onscroll = function() {scrollFunction()};
+
+function scrollFunction() {
+	if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+		document.getElementById("CrollTop").style.display = "block";
+		document.getElementById("CrollComment").style.display = "block";
+	} else {
+		document.getElementById("CrollTop").style.display = "none";
+		document.getElementById("CrollComment").style.display = "none";
+	}
+}
+
+// When the user clicks on the button, scroll to the top of the document
+function topFunction() {
+	document.body.scrollTop = 0;
+	document.documentElement.scrollTop = 0;
+}
+
+</script>
+
+<style>
+	.TruongThiHaTrang-form{
+		border-radius: 5px;
+	    background-color: #f2f2f2;
+	    padding: 20px;
+	}
+</style>

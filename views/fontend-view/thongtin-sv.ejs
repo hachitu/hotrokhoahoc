@@ -1,0 +1,459 @@
+
+	<header class="page-header">
+		<h2>Thông tin người dùng</h2>
+
+		<div class="right-wrapper pull-right">
+			<ol class="breadcrumbs">
+				<li>
+					<a href="index.html">
+						<i class="fa fa-home"></i>
+					</a>
+				</li>
+				<li><span>Trang chủ</span></li>
+				<li><span>Thông tin người dùng</span></li>
+			</ol>
+
+			<a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
+		</div>
+	</header>
+
+	<!-- start: page -->
+
+	<div class="row">
+		<div class="col-md-4 col-lg-3">
+
+			<section class="panel">
+				<div class="panel-body">
+					<div class="thumb-info mb-md">
+						<img src="img/<%= user[0].Avatar %>" class="rounded img-responsive" alt="John Doe">
+						<div class="thumb-info-title">
+							<span class="thumb-info-inner"><%= user[0].Name %></span>
+							<span class="thumb-info-type">SINH VIÊN</span>
+						</div>
+					</div>
+
+					<div class="widget-toggle-expand mb-md">
+						<div class="widget-header">
+							<h6><b>Thông tin</b></h6>
+							<div class="widget-toggle">+</div>
+						</div>
+						<hr>
+						<div>
+							<ul class="simple-todo-list">
+								<li><i class="fa fa-circle"></i> Mã sinh viên : <%= user[0].Code %></li>
+								<br>
+								<li><i class="fa fa-circle"></i> Số điện thoại : <%= user[0].PhoneNumber %></li>
+								<br>
+								<li><i class="fa fa-circle"></i> Ngày sinh : <%= user[0].BirthDay %></li>
+								<br>
+								<li><i class="fa fa-circle"></i> Email : <%= user[0].Email %></li>
+								<br>
+								<li><i class="fa fa-circle"></i> Địa chỉ : <%= user[0].Address %></li>
+								<br>
+								<li><i class="fa fa-circle"></i> Giới tính : <%= user[0].Sex %></li>
+								<br>
+								<li><i class="fa fa-circle"></i> Level : <%= user[0].Level %></li>
+							</ul>
+						</div>
+					</div>
+
+					<hr class="dotted short">
+
+					<h6 class="text-muted">Giới thiệu bản thân</h6>
+					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis vulputate quam. Interdum et malesuada</p>
+
+					<hr class="dotted short">
+
+					<div class="social-icons-list">
+						<a rel="tooltip" data-placement="bottom" target="_blank" href="https://www.facebook.com" data-original-title="Facebook"><i class="fa fa-facebook"></i><span>Facebook</span></a>
+						<a rel="tooltip" data-placement="bottom" href="https://www.twitter.com" data-original-title="Twitter"><i class="fa fa-twitter"></i><span>Twitter</span></a>
+						<a rel="tooltip" data-placement="bottom" href="http://www.linkedin.com" data-original-title="Linkedin"><i class="fa fa-linkedin"></i><span>Linkedin</span></a>
+					</div>
+
+				</div>
+			</section>
+
+
+			<section class="panel">
+				<header class="panel-heading">
+					<div class="panel-actions">
+						<a href="#" class="fa fa-caret-down"></a>
+						<a href="#" class="fa fa-times"></a>
+					</div>
+
+					<h2 class="panel-title">
+						<span class="label label-primary label-sm text-normal va-middle mr-sm">198</span>
+						<span class="va-middle">Friends</span>
+					</h2>
+				</header>
+				<div class="panel-body">
+					<div class="content">
+						<ul class="simple-user-list">
+							<li>
+								<figure class="image rounded">
+									<img src="assets/images/!sample-user.jpg" alt="Joseph Doe Junior" class="img-circle">
+								</figure>
+								<span class="title">Joseph Doe Junior</span>
+								<span class="message truncate">Lorem ipsum dolor sit.</span>
+							</li>
+							<li>
+								<figure class="image rounded">
+									<img src="assets/images/!sample-user.jpg" alt="Joseph Junior" class="img-circle">
+								</figure>
+								<span class="title">Joseph Junior</span>
+								<span class="message truncate">Lorem ipsum dolor sit.</span>
+							</li>
+							<li>
+								<figure class="image rounded">
+									<img src="assets/images/!sample-user.jpg" alt="Joe Junior" class="img-circle">
+								</figure>
+								<span class="title">Joe Junior</span>
+								<span class="message truncate">Lorem ipsum dolor sit.</span>
+							</li>
+							<li>
+								<figure class="image rounded">
+									<img src="assets/images/!sample-user.jpg" alt="Joseph Doe Junior" class="img-circle">
+								</figure>
+								<span class="title">Joseph Doe Junior</span>
+								<span class="message truncate">Lorem ipsum dolor sit.</span>
+							</li>
+						</ul>
+						<hr class="dotted short">
+						<div class="text-right">
+							<a class="text-uppercase text-muted" href="#">(View All)</a>
+						</div>
+					</div>
+				</div>
+
+			</section>
+
+			<section class="panel">
+				<header class="panel-heading">
+					<div class="panel-actions">
+						<a href="#" class="fa fa-caret-down"></a>
+						<a href="#" class="fa fa-times"></a>
+					</div>
+
+					<h2 class="panel-title">Popular Posts</h2>
+				</header>
+				<div class="panel-body">
+					<ul class="simple-post-list">
+						<li>
+							<div class="post-image">
+								<div class="img-thumbnail">
+									<a href="#">
+										<img src="assets/images/post-thumb-1.jpg" alt="">
+									</a>
+								</div>
+							</div>
+							<div class="post-info">
+								<a href="#">Nullam Vitae Nibh Un Odiosters</a>
+								<div class="post-meta">
+									 Jan 10, 2013
+								</div>
+							</div>
+						</li>
+						<li>
+							<div class="post-image">
+								<div class="img-thumbnail">
+									<a href="#">
+										<img src="assets/images/post-thumb-2.jpg" alt="">
+									</a>
+								</div>
+							</div>
+							<div class="post-info">
+								<a href="#">Vitae Nibh Un Odiosters</a>
+								<div class="post-meta">
+									 Jan 10, 2013
+								</div>
+							</div>
+						</li>
+						<li>
+							<div class="post-image">
+								<div class="img-thumbnail">
+									<a href="#">
+										<img src="assets/images/post-thumb-3.jpg" alt="">
+									</a>
+								</div>
+							</div>
+							<div class="post-info">
+								<a href="#">Odiosters Nullam Vitae</a>
+								<div class="post-meta">
+									 Jan 10, 2013
+								</div>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</section>
+
+		</div>
+		<div class="col-md-8 col-lg-6">
+
+			<div class="tabs">
+				<ul class="nav nav-tabs tabs-primary">
+					<li class="active">
+						<a href="#overview" data-toggle="tab">Overview</a>
+					</li>
+					<li>
+						<a href="#edit" data-toggle="tab">Edit</a>
+					</li>
+				</ul>
+				<div class="tab-content">
+					<div id="overview" class="tab-pane active">
+						<% include ../partials/messages %>
+						<h1 class="mb-xlg"><i class="fa fa-child"></i><b> Quá trình</b></h1>
+
+						<div class="timeline timeline-simple mt-xlg mb-md">
+							<!-- START: TIME LINE -->
+							<div class="tm-body">
+								<div class="tm-title">
+									<h3 class="h5 text-uppercase">November 2013</h3>
+								</div>
+								<ol class="tm-items">
+									<li>
+										<div class="tm-box">
+											<p class="text-muted mb-none">7 months ago.</p>
+											<p>
+												It's awesome when we find a good solution for our projects, Porto Admin is <span class="text-primary">#awesome</span>
+											</p>
+										</div>
+									</li>
+									<li>
+										<div class="tm-box">
+											<p class="text-muted mb-none">7 months ago.</p>
+											<p>
+												What is your biggest developer pain point?
+											</p>
+										</div>
+									</li>
+									<li>
+										<div class="tm-box">
+											<p class="text-muted mb-none">7 months ago.</p>
+											<p>
+												Checkout! How cool is that!
+											</p>
+											<div class="thumbnail-gallery">
+												<a class="img-thumbnail lightbox" href="assets/images/projects/project-4.jpg" data-plugin-options='{ "type":"image" }'>
+													<img class="img-responsive" width="215" src="assets/images/projects/project-4.jpg">
+													<span class="zoom">
+														<i class="fa fa-search"></i>
+													</span>
+												</a>
+											</div>
+										</div>
+									</li>
+								</ol>
+							</div>
+							<!-- END: TIME LINE -->
+						</div>
+					</div>
+
+					<div id="edit" class="tab-pane">
+
+						<form class="form-horizontal" action="/thongtin/editsv" enctype="multipart/form-data" method="post">
+							<h4 class="mb-xlg">Thông tin người dùng</h4>
+							<fieldset>
+
+								<!-- Mã sinh viên -->
+								<div class="form-group">
+								  <label class="col-md-3 control-label" for="StudentCode">Mã sinh viên</label>
+								  <div class="col-md-8">
+								    <input value="<%= user[0].StudentCode %>"
+								           type="text"
+								           class="form-control"
+								           name="StudentCode"
+								           required="required"
+								           disabled>
+								  </div>
+								</div>
+
+								<!-- Họ và tên -->
+								<div class="form-group">
+								  <label class="col-md-3 control-label" for="Name">Họ và Tên</label>
+								  <div class="col-md-8">
+								    <input value="<%= user[0].Name %>"
+								           type="text"
+								           class="form-control"
+								           name="Name"
+								           required="required">
+								  </div>
+								</div>
+
+								<!-- Ngày sinh -->
+								<div class="form-group">
+								  <label class="col-md-3 control-label" for="BirthDay">Ngày sinh</label>
+								  <div class="col-md-8">
+								    <input value="<%= user[0].BirthDay %>"
+								           type="date"
+								           class="form-control"
+								           name="BirthDay"
+								           required="required">
+								  </div>
+								</div>
+
+								<!-- Giới tính -->
+								<div class="form-group">
+								  <label class="col-md-3 control-label" for="Sex">Giới tính</label>
+								  <div class="col-md-8">
+								    <select name="Sex" class="form-control">
+								        <option value="<%= user[0].Sex %>">
+								            <% if ((user[0].Sex)=="1"){ %>
+								                Nam
+								            <% } else { %>
+								                Nữ
+								            <% } %>
+								        </option>
+								        <option value="1">Nam</option>
+								        <option value="0">Nữ</option>
+								    </select>
+								  </div>
+								</div>
+
+								<!-- Địa chỉ -->
+								<div class="form-group">
+								  <label class="col-md-3 control-label" for="Address">Địa chỉ</label>
+								  <div class="col-md-8">
+								    <input value="<%= user[0].Address %>"
+								           type="text"
+								           class="form-control"
+								           name="Address"
+								           required="required">
+								  </div>
+								</div>
+
+								<!-- Số điện thoại -->
+								<div class="form-group">
+								  <label class="col-md-3 control-label" for="PhoneNumber">Số điện thoại</label>
+								  <div class="col-md-8">
+								    <input value="<%= user[0].PhoneNumber %>"
+								           type="number"
+								           class="form-control"
+								           name="PhoneNumber"
+								           required="required">
+								  </div>
+								</div>
+
+								<!-- Gmail -->
+								<div class="form-group">
+								  <label class="col-md-3 control-label" for="Email">Gmail</label>
+								  <div class="col-md-8">
+								    <input value="<%= user[0].Email %>"
+								           type="gmail"
+								           class="form-control"
+								           name="Email"
+								           required="required">
+								  </div>
+								</div>
+
+							</fieldset>
+							<hr class="dotted tall">
+							<h4 class="mb-xlg">Mô tả bản thân</h4>
+							<fieldset>
+
+								<div class="form-group">
+									<label class="col-md-3 control-label" for="profileBio">Ảnh đại diện</label>
+									<div class="col-md-8">
+										<div class="thumbnail-gallery">
+											<a class="img-thumbnail lightbox" href="img/<%= user[0].Avatar %>" data-plugin-options='{ "type":"image" }'>
+												<img class="img-responsive" width="215" src="img/<%= user[0].Avatar %>">
+												<span class="zoom">
+													<i class="fa fa-search"></i>
+												</span>
+											</a>
+											<input type="file" name="Avatar" accept=".jpg">
+											<input type="text" name="AvatarOld" value="<%= user[0].Avatar %>" hidden>
+										</div>
+									</div>
+								</div>
+
+								<!-- <div class="form-group">
+									<label class="col-md-3 control-label" for="profileBio">Giới thiệu bản thân</label>
+									<div class="col-md-8">
+										<textarea name="Description" class="form-control" id="profileBio" value="<%= user[0].Description %>"></textarea>
+									</div>
+								</div> -->
+							</fieldset>
+							<hr class="dotted tall">
+							<h4 class="mb-xlg">Đổi mật khẩu</h4>
+							<fieldset class="mb-xl">
+								<div class="form-group">
+									<label class="col-md-3 control-label" for="profileNewPassword">Mật khẩu cũ</label>
+									<div class="col-md-8">
+										<input name="password0" type="password" class="form-control">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-md-3 control-label" for="profileNewPassword">Mật khẩu mới</label>
+									<div class="col-md-8">
+										<input name="password1" type="password" class="form-control">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-md-3 control-label" for="profileNewPasswordRepeat">Nhập lại mật khẩu</label>
+									<div class="col-md-8">
+										<input name="password2" type="password" class="form-control">
+									</div>
+								</div>
+							</fieldset>
+							<div class="panel-footer">
+								<div class="row">
+									<div class="col-md-9 col-md-offset-3">
+										<button type="submit" class="btn btn-primary">Submit</button>
+										<button type="reset" class="btn btn-default">Reset</button>
+									</div>
+								</div>
+							</div>
+
+						</form>
+
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-12 col-lg-3">
+
+			<!-- <h4 class="mb-md">Chu kì</h4>
+			<ul class="simple-card-list mb-xlg"> -->
+				<!-- <li class="dark">
+					<h3>48</h3>
+					<p>Tín chỉ đã đạt.</p>
+				</li> -->
+				<!-- <li class="danger">
+					<h3>189,000,000 VNĐ</h3>
+					<p>Học phí đã đóng.</p>
+				</li>
+				<li class="primary">
+					<h3>165</h3>
+					<p>Tín chỉ còn thiếu.</p>
+				</li>
+				<li class="success">
+					<h3>3.42</h3>
+					<p>Điểm tổng kết.</p>
+				</li> -->
+			</ul>
+
+			<!-- <h4 class="mb-md">Những học phần xuất sắc</h4>
+			<ul class="simple-bullet-list mb-xlg">
+				<li class="red">
+					<span class="title">Lập trình C#</span>
+					<span class="description truncate">Giảng viên: Lã Quang Trung</span>
+				</li>
+				<li class="green">
+					<span class="title">Java</span>
+					<span class="description truncate">Giảng viên: Nguyễn Thái Sơn</span>
+				</li>
+				<li class="blue">
+					<span class="title">Kiểm thử phần mềm</span>
+					<span class="description truncate">Giảng viên: Lê Chí Luận</span>
+				</li>
+				<li class="orange">
+					<span class="title">GIS</span>
+					<span class="description truncate">Giảng viên: Lê Chí Luận</span>
+				</li>
+			</ul> -->
+
+		</div>
+
+	</div>
+	<!-- end: page -->

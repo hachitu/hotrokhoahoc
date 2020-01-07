@@ -1,0 +1,372 @@
+<!-- start: page -->
+<section class="panel">
+	<header class="panel-heading">
+		<div class="panel-actions">
+			<a href="#" class="fa fa-caret-down"></a>
+			<a href="#" class="fa fa-times"></a>
+		</div>
+		<h2 class="panel-title">Quản lý lớp học</h2>
+	</header>
+	<div class="panel-body">
+		<div class="row">
+			<div class="col-sm-12">
+        <div class="col-sm-6">
+				<div class="mb-md">
+					<% include ../partials/messages %>
+					<button id="addToTable" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Add <i class="fa fa-plus"></i></button>
+				</div>
+      </div>
+      <div class="col-sm-6">
+        <label for="">Chọn file import đúng định dạng</label>
+        <input type="file" id="input" />
+        <label for="">File mẫu</label>
+        <a href="read-excel-file/Class.xlsx">Download File</a>
+      </div>
+			</div>
+		</div>
+		<table class="table table-bordered table-striped mb-none" id="datatable-tabletools" data-swf-path="/vendor/jquery-datatables/extras/TableTools/swf/copy_csv_xls_pdf.swf">
+			<thead>
+				<tr>
+          <th>Mã lớp học</th>
+          <th>Tên lớp học</th>
+          <th>Tên giảng viên</th>
+          <th>Tên học phần</th>
+          <th>Thời gian bắt đầu</th>
+          <th>Thời gian kết thúc</th>
+          <th>Sĩ số</th>
+          <th>Action</th>
+        </tr>
+			</thead>
+			<tbody>
+				<% classmodule.forEach(function(rows){ %>
+          <tr>
+            <td><%= rows.ID_Classmodule %></td>
+            <td><%= rows.NameClass %></td>
+            <td><%= rows.Name %></td>
+            <td><%= rows.NameSubject %></td>
+            <td><%= rows.TimeStart %></td>
+            <td><%= rows.TimeEnd %></td>
+            <td><%= rows.CountStudent %></td>
+            <td class="actions">
+              <a href="#" data-toggle="modal" data-target=".model-edit<%= rows.ID_Classmodule %>"><i class="fa fa-pencil"></i></a>
+              <a href="#"><i class="fa fa-trash-o" data-toggle="modal" data-target="#Modal-Delete<%= rows.ID_Classmodule %>"></i></a>
+            </td>
+          </tr>
+				<% }) %>
+			</tbody>
+		</table>
+	</div>
+</section>
+<!-- end: page -->
+
+
+<!-- start: dialog add -->
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+
+		<!-- start: header -->
+    <header class="panel-heading">
+        <h2 class="panel-title">Thêm lớp học</h2>
+        <p class="panel-subtitle">
+            Điền đầy đủ và chính xác của lớp học vào form bên dưới.
+        </p>
+    </header>
+		<!-- end: header -->
+
+		<!-- start: body -->
+    <div class="modal-body">
+      <form class="form-horizontal form-bordered" action="/classmodule/add" method="POST" >
+
+          <!-- Tên lớp học -->
+          <div class="form-group">
+              <label class="col-md-3 control-label" for="NameClass">Tên lớp học </label>
+              <div class="col-md-7">
+                <input type="text"
+                       class="form-control"
+                       name="NameClass"
+                       required="required">
+              </div>
+          </div>
+
+          <!-- Giảng viên -->
+          <div class="form-group">
+              <label class="col-md-3 control-label" for="Sex">Giảng viên </label>
+              <div class="col-md-7">
+              <select name="ID_Teacher" class="form-control">
+                <% teacher.forEach(function(rows){ %>
+                  <option value="<%= rows.ID_Teacher %>"><%= rows.Name %></option>
+                <% }); %>
+              </select>
+              </div>
+          </div>
+
+          <!-- học phần -->
+          <div class="form-group">
+              <label class="col-md-3 control-label" for="Sex">Học phần </label>
+              <div class="col-md-7">
+              <select name="ID_Subject" class="form-control">
+                <% subject.forEach(function(rows){ %>
+                  <option value="<%= rows.ID_Subject %>"><%= rows.NameSubject %></option>
+                <% }); %>
+              </select>
+              </div>
+          </div>
+
+          <!-- Ngày Start -->
+          <div class="form-group">
+              <label class="col-md-3 control-label" for="TimeStart">Ngày bắt đầu </label>
+              <div class="col-md-7">
+              <input type="date"
+                     class="form-control"
+                     name="TimeStart"
+                     id="StartDate"
+                     required="required">
+              </div>
+          </div>
+
+          <!-- Ngày End -->
+          <div class="form-group">
+              <label class="col-md-3 control-label" for="TimeEnd">Ngày kết thúc </label>
+              <div class="col-md-7">
+              <input type="date"
+                     class="form-control"
+                     name="TimeEnd"
+                     id="EndDate"
+                     required="required">
+              </div>
+          </div>
+
+          <script>
+            $("#EndDate").change(function () {
+                var startDate = document.getElementById("StartDate").value;
+                var endDate = document.getElementById("EndDate").value;
+
+                if ((Date.parse(startDate) >= Date.parse(endDate))) {
+                    alert("Ngày kết thúc khóa học phải lớn hơn ngày bắt đầu khóa học !!!");
+                    document.getElementById("EndDate").value = "";
+                }
+            });
+          </script>
+
+          <!-- start: count sv -->
+          <div class="form-group">
+              <label class="col-md-3 control-label" for="CountStudent">Sĩ số </label>
+              <div class="col-md-7">
+                <input type="text"
+                       class="form-control"
+                       name="CountStudent"
+                       required="required">
+              </div>
+          </div>
+          <!-- end: count sv -->
+
+        </div>
+        <!-- end: body -->
+
+        <!-- start: footer -->
+        <footer class="panel-footer">
+            <div class="row">
+                <div class="col-sm-9 col-sm-offset-3">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button type="reset" class="btn btn-info" >Reset</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </footer>
+        <!-- start: footer -->
+
+      </form>
+    </div>
+  </div>
+</div>
+<!-- end: DIALOG ADD CLASS -->
+
+<!-- start: DIALOG EDIT CLASS -->
+<% classmodule.forEach(function(rows){ %>
+<div class="modal fade model-edit<%= rows.ID_Classmodule %>" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+
+    <!-- start: header -->
+    <header class="panel-heading">
+        <h2 class="panel-title">Sửa lớp học</h2>
+        <p class="panel-subtitle">
+            Họ và tên: <%= rows.NameClass %>
+        </p>
+    </header>
+ 	  <!-- end: header -->
+
+    <!-- start: body -->
+    <div class="modal-body">
+      <form class="form-horizontal form-bordered" action="/classmodule/edit/<%= rows.ID_Classmodule %>" method="POST" role="form">
+
+      <!-- Tên lớp học -->
+      <div class="form-group">
+          <label class="col-md-3 control-label" for="NameClass">Tên lớp học </label>
+          <div class="col-md-7">
+            <input type="text"
+                   class="form-control"
+                   name="NameClass"
+                   required="required"
+                   value="<%= rows.NameClass %>">
+          </div>
+      </div>
+
+      <!-- Giảng viên -->
+      <div class="form-group">
+          <label class="col-md-3 control-label" for="Sex">Giảng viên </label>
+          <div class="col-md-7">
+          <select name="ID_Teacher" class="form-control">
+              <option value="<%= rows.ID_Teacher %>"><%= rows.Name %></option>
+            <% teacher.forEach(function(rows){ %>
+              <option value="<%= rows.ID_Teacher %>"><%= rows.Name %></option>
+            <% }); %>
+          </select>
+          </div>
+      </div>
+
+      <!-- học phần -->
+      <div class="form-group">
+          <label class="col-md-3 control-label" for="Sex">Học phần </label>
+          <div class="col-md-7">
+          <select name="ID_Subject" class="form-control">
+              <option value="<%= rows.ID_Subject %>"><%= rows.NameSubject %>
+            <% subject.forEach(function(rows){ %>
+              <option value="<%= rows.ID_Subject %>"><%= rows.NameSubject %></option>
+            <% }); %>
+          </select>
+          </div>
+      </div>
+
+      <!-- Ngày Start -->
+      <div class="form-group">
+          <label class="col-md-3 control-label" for="TimeStart">Ngày bắt đầu </label>
+          <div class="col-md-7">
+          <input type="date"
+                 class="form-control"
+                 name="TimeStart"
+                 required="required"
+                 value="<%= rows.TimeStart %>">
+          </div>
+      </div>
+
+      <!-- Ngày End -->
+      <div class="form-group">
+          <label class="col-md-3 control-label" for="TimeEnd">Ngày kết thúc </label>
+          <div class="col-md-7">
+          <input type="date"
+                 class="form-control"
+                 name="TimeEnd"
+                 required="required"
+                 value="<%= rows.TimeEnd %>">
+          </div>
+      </div>
+
+      <!-- start: count sv -->
+      <div class="form-group">
+          <label class="col-md-3 control-label" for="CountStudent">Sĩ số </label>
+          <div class="col-md-7">
+            <input type="text"
+                   class="form-control"
+                   name="CountStudent"
+                   required="required"
+                   value="<%= rows.CountStudent %>">
+          </div>
+      </div>
+      <!-- end: count sv -->
+
+    </div>
+    <!-- end: body -->
+
+    <!-- start: Footer -->
+    <footer class="panel-footer">
+        <div class="row">
+            <div class="col-sm-9 col-sm-offset-3">
+                <button type="submit" class="btn btn-primary">Save</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </footer>
+	<!-- end: Footer -->
+
+    </form>
+  	</div>
+  </div>
+</div>
+<% }) %>
+<!-- end: dialog edit -->
+
+
+<!-- start: dialog delete -->
+<% classmodule.forEach(function(rows){ %>
+<div class="modal fade" id="Modal-Delete<%= rows.ID_Classmodule %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+
+    <!-- start: header -->
+    <header class="panel-heading">
+        <h2 class="panel-title">Xóa lớp học</h2>
+        <p class="panel-subtitle">
+            <%= rows.NameClass %>
+        </p>
+    </header>
+    <!-- end: header -->
+
+    <!-- start: body -->
+    <div class="panel-body" style="color: red">
+        <div class="modal-wrapper">
+            <div class="modal-icon">
+                <i style="color: red" class="fa fa-times-circle"></i>
+            </div>
+            <div class="modal-text">
+                <h4><b>Chú ý !</b></h4>
+                <p>Nếu bạn xóa lớp học <b><%= rows.NameClass %></b> mọi thông tin liên quan sẽ bị xóa và không thể phục hồi.</p>
+            </div>
+        </div>
+    </div>
+    <!-- start: body -->
+
+    <form action="/classmodule/delete/<%= rows.ID_Classmodule %>/<%= rows.username %>" method="POST">
+    <!-- start: footer -->
+    <footer class="panel-footer">
+        <div class="row">
+            <div class="col-sm-9 col-sm-offset-3">
+                <button type="submit" class="btn btn-primary">Đồng ý</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </footer>
+    <!-- start: footer -->
+
+    </form>
+    </div>
+  </div>
+</div>
+<% }) %>
+<!-- start: dialog delete -->
+
+<script>
+  var input = document.getElementById('input')
+
+  input.addEventListener('change', function() {
+    readXlsxFile(input.files[0], { dateFormat: 'DD/MM/YY' }).then(function(data) {
+
+      $.ajax({
+        url: '/classmodule/import',
+        type: 'POST',
+        dataType: 'array',
+        contentType: "application/x-www-form-urlencoded;charset=utf-8",
+        data: {param1: data}
+      })
+      .always(function() {
+        alert("Import file lớp học !!!");
+        window.location.reload();
+      });
+
+    }, (error) => {
+      console.error(error)
+      alert("Error while parsing Excel file. See console output for the error stack trace.")
+    })
+  })
+</script>

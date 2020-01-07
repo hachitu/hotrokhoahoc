@@ -1,0 +1,59 @@
+#CrollTop {
+  display: none;
+  position: fixed;
+  bottom: 20px;
+  right: 30px;
+  z-index: 99;
+  font-size: 30px;
+  border: none;
+  outline: none;
+  background-color: #34495E;
+  color: white;
+  cursor: pointer;
+  padding: 15px;
+  border-radius: 50%;
+}
+
+#CrollTop:hover {
+  background-color: #0088CC;
+}
+
+#CrollComment {
+  display: none;
+  position: fixed;
+  bottom: 100px;
+  right: 30px;
+  z-index: 99;
+  font-size: 30px;
+  border: none;
+  outline: none;
+  background-color: #34495E;
+  color: white;
+  cursor: pointer;
+  padding: 15px;
+  border-radius: 50%;
+}
+
+#CrollComment:hover {
+  background-color: #0088CC;
+}
+
+#imgcmt{
+  border-radius: 50%;
+  width:50px;
+  height: 50px;
+  padding: 2px;
+  border: 2px solid #ddd;
+}
+
+#imgavata{
+  border-radius: 50%;
+  width:40px;
+  height: 40px;
+  padding: 1px;
+  border: 1px solid #ddd;
+}
+
+html {
+  scroll-behavior: smooth;
+}

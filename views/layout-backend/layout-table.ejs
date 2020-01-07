@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <!-- Basic -->
+        <meta charset="UTF-8">
+
+        <title><%= tittle %></title>
+        <meta name="keywords" content="HTML5 Admin Template" />
+        <meta name="description" content="Porto Admin - Responsive HTML5 Template">
+        <meta name="author" content="okler.net">
+
+        <!-- Mobile Metas -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+        <!-- Web Fonts  -->
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800|Shadows+Into+Light" rel="stylesheet" type="text/css">
+
+        <!-- Improt file -->
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <script src="read-excel-file/read-excel-file.min.js"></script>
+
+        <!-- Vendor CSS -->
+        <link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.css" />
+        <link rel="stylesheet" href="assets/vendor/font-awesome/css/font-awesome.css" />
+        <link rel="stylesheet" href="assets/vendor/magnific-popup/magnific-popup.css" />
+        <link rel="stylesheet" href="assets/vendor/bootstrap-datepicker/css/datepicker3.css" />
+
+        <!-- Specific Page Vendor CSS -->
+        <link rel="stylesheet" href="assets/vendor/select2/select2.css" />
+        <link rel="stylesheet" href="assets/vendor/jquery-datatables-bs3/assets/css/datatables.css" />
+
+        <!-- Theme CSS -->
+        <link rel="stylesheet" href="assets/stylesheets/theme.css" />
+
+        <!-- Skin CSS -->
+        <link rel="stylesheet" href="assets/stylesheets/skins/default.css" />
+
+        <!-- Theme Custom CSS -->
+        <link rel="stylesheet" href="assets/stylesheets/theme-custom.css">
+
+        <!-- TruongThiHaTrang Custom CSS -->
+        <link rel="stylesheet" href="assets/stylesheets/theme-TruongThiHaTrang.css">
+
+        <!-- Head Libs -->
+        <script src="assets/vendor/modernizr/modernizr.js" type="ef762c2f11d715dc34c8c483-text/javascript"></script>
+
+    </head>
+
+    <body>
+
+        <!-- START BODY -->
+        <section class="body">
+            <% include ../layout-backend/header %>
+            <div class="inner-wrapper">
+            <% include ../layout-backend/menu-left %>
+                <section role="main" class="content-body">
+                    <% include ../layout-backend/page-header %>
+
+                    <%- body %>
+                </section>
+            <% include ../layout-backend/menu-right %>
+            </div>
+        </section>
+        <!-- END BODY -->
+
+        <!-- Vendor -->
+        <script src="assets/vendor/jquery/jquery.js" type="ef762c2f11d715dc34c8c483-text/javascript"></script>
+        <script src="assets/vendor/jquery-browser-mobile/jquery.browser.mobile.js" type="ef762c2f11d715dc34c8c483-text/javascript"></script>
+        <script src="assets/vendor/bootstrap/js/bootstrap.js" type="ef762c2f11d715dc34c8c483-text/javascript"></script>
+        <script src="assets/vendor/nanoscroller/nanoscroller.js" type="ef762c2f11d715dc34c8c483-text/javascript"></script>
+        <script src="assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js" type="ef762c2f11d715dc34c8c483-text/javascript"></script>
+        <script src="assets/vendor/magnific-popup/magnific-popup.js" type="ef762c2f11d715dc34c8c483-text/javascript"></script>
+        <script src="assets/vendor/jquery-placeholder/jquery.placeholder.js" type="ef762c2f11d715dc34c8c483-text/javascript"></script>
+
+        <!-- Specific Page Vendor -->
+        <script src="assets/vendor/select2/select2.js" type="ef762c2f11d715dc34c8c483-text/javascript"></script>
+        <script src="assets/vendor/jquery-datatables/media/js/jquery.dataTables.js" type="ef762c2f11d715dc34c8c483-text/javascript"></script>
+        <script src="assets/vendor/jquery-datatables/extras/TableTools/js/dataTables.tableTools.min.js" type="ef762c2f11d715dc34c8c483-text/javascript"></script>
+        <script src="assets/vendor/jquery-datatables-bs3/assets/js/datatables.js" type="ef762c2f11d715dc34c8c483-text/javascript"></script>
+
+        <!-- Theme Base, Components and Settings -->
+        <script src="assets/javascripts/theme.js" type="ef762c2f11d715dc34c8c483-text/javascript"></script>
+
+        <!-- Theme Custom -->
+        <script src="assets/javascripts/theme.custom.js" type="ef762c2f11d715dc34c8c483-text/javascript"></script>
+
+        <!-- Theme Initialization Files -->
+        <script src="assets/javascripts/theme.init.js" type="ef762c2f11d715dc34c8c483-text/javascript"></script>
+
+
+        <!-- Examples -->
+        <script src="assets/javascripts/tables/examples.datatables.default.js" type="ef762c2f11d715dc34c8c483-text/javascript"></script>
+        <script src="assets/javascripts/tables/examples.datatables.row.with.details.js" type="ef762c2f11d715dc34c8c483-text/javascript"></script>
+        <script src="assets/javascripts/tables/examples.datatables.tabletools.js" type="ef762c2f11d715dc34c8c483-text/javascript"></script>
+
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13" type="ef762c2f11d715dc34c8c483-text/javascript"></script>
+
+        <script type="ef762c2f11d715dc34c8c483-text/javascript">
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'UA-23581568-13');
+        </script>
+
+        <script src="https://ajax.cloudflare.com/cdn-cgi/scripts/a2bd7673/cloudflare-static/rocket-loader.min.js" data-cf-settings="ef762c2f11d715dc34c8c483-|49" defer=""></script>
+
+    </body>
+</html>

@@ -1,0 +1,339 @@
+<!-- start: page -->
+
+<section class="panel">
+    <header class="panel-heading">
+        <div class="panel-actions">
+            <a href="#" class="fa fa-caret-down"></a>
+            <a href="#" class="fa fa-times"></a>
+        </div>
+
+        <h2 class="panel-title">Quản lý học phần</h2>
+    </header>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-sm-12">
+              <div class="col-sm-6">
+                <div class="mb-md">
+                    <% include ../partials/messages %>
+                    <button id="addToTable" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Add <i class="fa fa-plus"></i></button>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <label for="">Chọn file import đúng định dạng</label>
+                <input type="file" id="input" />
+                <label for="">File mẫu</label>
+                <a href="read-excel-file/Subject.xlsx">Download File</a>
+              </div>
+            </div>
+        </div>
+        <table class="table table-bordered table-striped mb-none" id="datatable-tabletools" data-swf-path="/vendor/jquery-datatables/extras/TableTools/swf/copy_csv_xls_pdf.swf">
+            <thead>
+                <tr>
+                    <th>Mã học phần</th>
+                    <th>Tên học phần</th>
+                    <th>Số tín chỉ</th>
+                    <th>Ảnh</th>
+                    <th>Level</th>
+                    <th>Miêu tả</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% subject.forEach(function(rows){ %>
+                    <tr>
+                        <td><%= rows.ID_Subject %></td>
+                        <td><%= rows.NameSubject %></td>
+                        <td><%= rows.Number %></td>
+                        <td><img height="70px" width="70px" class="img-responsive" width="215" src="img/<%= rows.Image %>"></td>
+                        <td><%= rows.Level %></td>
+                        <td><%= rows.Description %></td>
+                        <td class="actions">
+                            <a href="#" data-toggle="modal" data-target=".model-edit<%= rows.ID_Subject %>"><i class="fa fa-pencil"></i></a>
+                            <a href="#"><i class="fa fa-trash-o" data-toggle="modal" data-target="#Modal-Delete<%= rows.ID_Subject %>"></i></a>
+                        </td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+</section>
+<!-- end: page -->
+
+<!-- start: dialog add -->
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+
+      <!-- start: header -->
+      <header class="panel-heading">
+          <h2 class="panel-title">Thêm học phần</h2>
+          <p class="panel-subtitle">
+              Điền đầy đủ và chính xác của học phần vào form bên dưới.
+          </p>
+      </header>
+      <!-- end: header -->
+
+      <!-- start: body -->
+      <div class="modal-body">
+        <form class="form-horizontal form-bordered" action="/subject/add" method="POST" enctype="multipart/form-data">
+
+          <!-- Tên học phần -->
+          <div class="form-group">
+              <label class="col-md-3 control-label" for="NameSubject">Tên học phần </label>
+              <div class="col-md-7">
+                <input type="text"
+                       class="form-control"
+                       name="NameSubject"
+                       required="required">
+              </div>
+          </div>
+
+          <!-- Số tín chỉ -->
+          <div class="form-group">
+              <label class="col-md-3 control-label" for="Number">Số tín chỉ </label>
+              <div class="col-md-7">
+                <input type="Number"
+                       class="form-control"
+                       name="Number"
+                       required="required">
+              </div>
+          </div>
+
+          <!-- Ảnh -->
+          <div class="form-group">
+            <label class="col-md-3 control-label" for="Avatar">Ảnh </label>
+            <div class="col-md-7">
+              <input type="file" name="Avatar" accept=".jpg">
+            </div>
+          </div>
+
+          <!-- Level -->
+          <div class="form-group">
+              <label class="col-md-3 control-label" for="Level">Level </label>
+              <div class="col-md-7">
+                <input type="number"
+                       class="form-control"
+                       name="Level"
+                       required="required">
+              </div>
+          </div>
+
+          <!-- start: miêu tả -->
+          <div class="form-group">
+              <label class="col-md-3 control-label" for="Description">Miêu tả </label>
+              <div class="col-md-7">
+                <input type="text"
+                       class="form-control"
+                       name="Description"
+                       required="required">
+              </div>
+          </div>
+          <!-- end: miêu tả -->
+
+        </div>
+        <!-- end: body -->
+
+        <!-- start: footer -->
+        <footer class="panel-footer">
+            <div class="row">
+                <div class="col-sm-9 col-sm-offset-3">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button type="reset" class="btn btn-info" >Reset</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </footer>
+        <!-- end: footer -->
+
+      </form>
+    </div>
+  </div>
+</div>
+<!-- end: dialog add -->
+
+<!-- start: dialog edit -->
+<% subject.forEach(function(rows){ %>
+<div class="modal fade model-edit<%= rows.ID_Subject %>" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+
+    <!-- start: header -->
+    <header class="panel-heading">
+        <h2 class="panel-title">Sửa học phần</h2>
+        <p class="panel-subtitle">
+            Họ và tên: <%= rows.NameSubject %>
+        </p>
+    </header>
+    <!-- end: header -->
+
+    <!-- start: body -->
+    <div class="modal-body">
+    <form class="form-horizontal form-bordered" action="/subject/edit/<%= rows.ID_Subject %>" method="POST" role="form" enctype="multipart/form-data">
+
+      <!-- Mã học phần -->
+      <div class="form-group">
+          <label class="col-md-3 control-label" for="ID_Subject">Mã học phần </label>
+          <div class="col-md-7">
+            <input value="<%= rows.ID_Subject %>"
+                   type="number"
+                   class="form-control"
+                   name="ID_Subject"
+                   required="required"
+                   disabled="disabled">
+          </div>
+      </div>
+
+      <!-- Tên học phần -->
+      <div class="form-group">
+          <label class="col-md-3 control-label" for="NameSubject">Tên học phần </label>
+          <div class="col-md-7">
+            <input value="<%= rows.NameSubject %>"
+                   type="text"
+                   class="form-control"
+                   name="NameSubject"
+                   required="required">
+          </div>
+      </div>
+
+      <!-- số tín chỉ  -->
+      <div class="form-group">
+          <label class="col-md-3 control-label" for="Number">Số tín chỉ </label>
+          <div class="col-md-7">
+            <input value="<%= rows.Number %>"
+                   type="Number"
+                   class="form-control"
+                   name="Number"
+                   required="required">
+          </div>
+      </div>
+
+      <!-- ảnh -->
+      <div class="form-group">
+        <label class="col-md-3 control-label" for="Avatar">Ảnh </label>
+        <div class="col-md-7">
+          <img height="100px" width="100px" class="img-responsive" width="215" src="img/<%= rows.Image %>">
+          <input type="file" name="Avatar" accept=".jpg">
+          <input type="text" name="AvatarOld" value="<%= rows.Image %>" hidden>
+        </div>
+      </div>
+
+      <!-- miêu tả -->
+      <div class="form-group">
+          <label class="col-md-3 control-label" for="Description">Miêu tả </label>
+          <div class="col-md-7">
+            <input value="<%= rows.Description %>"
+                   type="text"
+                   class="form-control"
+                   name="Description"
+                   required="required">
+          </div>
+      </div>
+
+      <!-- level -->
+      <div class="form-group">
+          <label class="col-md-3 control-label" for="Level">Level </label>
+          <div class="col-md-7">
+            <input value="<%= rows.Level %>"
+                   type="number"
+                   class="form-control"
+                   name="Level"
+                   required="required">
+          </div>
+      </div>
+      <!-- end: level -->
+
+    </div>
+    <!-- end: body -->
+
+    <!-- start: footer -->
+    <footer class="panel-footer">
+        <div class="row">
+            <div class="col-sm-9 col-sm-offset-3">
+                <button type="submit" class="btn btn-primary">Save</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </footer>
+    <!-- end: footer -->
+
+    </form>
+    </div>
+  </div>
+</div>
+<% }) %>
+<!-- end: dialog edit -->
+
+
+<!-- start: dialog delete -->
+<% subject.forEach(function(rows){ %>
+<div class="modal fade" id="Modal-Delete<%= rows.ID_Subject %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+
+    <!-- start: header -->
+    <header class="panel-heading">
+        <h2 class="panel-title">Xóa học phần</h2>
+        <p class="panel-subtitle">
+            <%= rows.NameSubject %>
+        </p>
+    </header>
+    <!-- end: header -->
+
+    <!-- start: body -->
+    <div class="panel-body" style="color: red">
+        <div class="modal-wrapper">
+            <div class="modal-icon">
+                <i style="color: red" class="fa fa-times-circle"></i>
+            </div>
+            <div class="modal-text">
+                <h4><b>Chú ý !</b></h4>
+                <p>Nếu bạn xóa học phần <b><%= rows.NameSubject %></b> mọi thông tin liên quan sẽ bị xóa và không thể phục hồi.</p>
+            </div>
+        </div>
+    </div>
+    <!-- end: body -->
+
+    <!-- start: footer -->
+    <form action="/subject/delete/<%= rows.ID_Subject %>/<%= rows.username %>" method="POST">
+        <!-- BUTTON -->
+        <footer class="panel-footer">
+            <div class="row">
+                <div class="col-sm-9 col-sm-offset-3">
+                    <button type="submit" class="btn btn-primary">Đồng ý</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </footer>
+    </form>
+    <!-- end: footer -->
+
+    </div>
+  </div>
+</div>
+<% }) %>
+<!-- end: dialog edit -->
+
+<script>
+  var input = document.getElementById('input')
+
+  input.addEventListener('change', function() {
+    readXlsxFile(input.files[0], { dateFormat: 'DD/MM/YY' }).then(function(data) {
+
+      $.ajax({
+        url: '/subject/import',
+        type: 'POST',
+        dataType: 'array',
+        contentType: "application/x-www-form-urlencoded;charset=utf-8",
+        data: {param1: data}
+      })
+      .always(function() {
+        alert("Import file học phần !!!");
+        window.location.reload();
+      });
+
+    }, (error) => {
+      console.error(error)
+      alert("Error while parsing Excel file. See console output for the error stack trace.")
+    })
+  })
+</script>

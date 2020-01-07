@@ -1,0 +1,505 @@
+<!-- start: page  -->
+<section class="panel">
+    <header class="panel-heading">
+        <div class="panel-actions">
+            <a href="#" class="fa fa-caret-down"></a>
+            <a href="#" class="fa fa-times"></a>
+        </div>
+
+        <h2 class="panel-title">Quản lý sinh viên</h2>
+    </header>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="mb-md">
+                    <% include ../partials/messages %>
+                    <div class="col-sm-6">
+                      <button id="addToTable" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Add <i class="fa fa-plus"></i></button>
+                    </div>
+                    <div class="col-sm-6">
+                      <label for="">Chọn file import đúng định dạng</label>
+                      <input type="file" id="input" />
+                      <label for="">File mẫu</label>
+                      <a href="read-excel-file/Student.xlsx">Download File</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <table class="table table-bordered table-striped mb-none" id="datatable-tabletools" data-swf-path="/vendor/jquery-datatables/extras/TableTools/swf/copy_csv_xls_pdf.swf">
+            <thead>
+                <tr>
+                    <th>Avatar</th>
+                    <th>Mã sinh viên</th>
+                    <th>Tên sinh viên</th>
+                    <th>Lớp</th>
+                    <th>Level</th>
+                    <th>Ngày sinh</th>
+                    <th>Số điện thoại</th>
+                    <th>Email</th>
+                    <th>Địa chỉ</th>
+                    <th>Giới tính</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% student.forEach(function(rows){ %>
+                    <tr>
+                        <td><img width="70px" height="70px" src="/img/<%= rows.Avatar %>" alt="Avatar"></td>
+                        <td><%= rows.StudentCode %></td>
+                        <td><%= rows.Name %></td>
+                        <td><%= rows.Description %></td>
+                        <td><%= rows.Level %></td>
+                        <td><%= rows.BirthDay %></td>
+                        <td><%= rows.PhoneNumber %></td>
+                        <td><%= rows.Email %></td>
+                        <td><%= rows.Address %></td>
+                        <% if(rows.Sex==1){ %>
+                          <td>Nam</td>
+                        <% }else{ %>
+                          <td>Nữ</td>
+                        <% } %>
+                        <td class="actions">
+                            <a href="#" data-toggle="modal" data-target=".model-edit<%= rows.ID_Student %>"><i class="fa fa-pencil"></i></a>
+                            <a href="#"><i class="fa fa-trash-o" data-toggle="modal" data-target="#Modal-Delete<%= rows.ID_Student %>"></i></a>
+                        </td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+</section>
+<!-- end: page -->
+
+
+
+<!-- start: dialog add -->
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <!-- start: header -->
+      <header class="panel-heading">
+          <h2 class="panel-title">Thêm sinh viên</h2>
+          <p class="panel-subtitle">
+              Điền đầy đủ và chính xác của sinh viên vào form bên dưới.
+          </p>
+      </header>
+      <!-- start: header -->
+
+      <!-- start: body -->
+      <div class="modal-body">
+        <form class="form-horizontal form-bordered" action="/student/add" method="POST" >
+
+          <!-- Avatar -->
+            <div class="form-group hidden">
+                <label class="col-md-3 control-label" for="Avatar">Ảnh</label>
+                <div class="col-md-7">
+                  <input type="file"
+                         class="form-control"
+                         name="Avatar">
+                </div>
+            </div>
+
+          <!-- Mã sinh viên -->
+            <div class="form-group">
+                <label class="col-md-3 control-label" for="StudentCode">Mã sinh viên</label>
+                <div class="col-md-7">
+                  <input type="text"
+                         class="form-control"
+                         name="StudentCode"
+                         id="StudentCode"
+                         placeholder="Nhập mã sinh viên"
+                         required="required">
+                </div>
+            </div>
+
+          <!-- Họ và tên -->
+            <div class="form-group">
+                <label class="col-md-3 control-label" for="NameStudent">Họ và Tên</label>
+                <div class="col-md-7">
+                  <input type="text"
+                         class="form-control"
+                         id="NameStudent"
+                         name="NameStudent"
+                         placeholder="Nhập họ và tên"
+                         required="required">
+                </div>
+            </div>
+
+            <!-- Tên lớp học -->
+              <div class="form-group">
+                  <label class="col-md-3 control-label" for="Description">Tên lớp học</label>
+                  <div class="col-md-7">
+                    <input type="text"
+                           class="form-control"
+                           id="Description"
+                           name="Description"
+                           placeholder="Nhập tên lớp học"
+                           required="required">
+                  </div>
+              </div>
+
+          <!-- Tài khoản -->
+            <div class="form-group">
+              <label class="control-label col-md-3">Tài khoản</label>
+              <div class="col-md-7">
+                <section class="form-group-vertical">
+                  <div class="input-group input-group-icon">
+                    <span class="input-group-addon">
+                      <span class="icon"><i class="fa fa-user"></i></span>
+                    </span>
+                    <input class="form-control"
+                           type="username"
+                           placeholder="Username"
+                           name="username"
+                           required="required">
+                  </div>
+                  <div class="input-group input-group-icon">
+                    <span class="input-group-addon">
+                      <span class="icon"><i class="fa fa-key"></i></span>
+                    </span>
+                    <input class="form-control"
+                           type="password"
+                           placeholder="Password"
+                           name="password"
+                           required="required">
+                  </div>
+                </section>
+              </div>
+            </div>
+
+          <!-- Ngày sinh -->
+            <div class="form-group">
+                <label class="col-md-3 control-label" for="BirthDay">Ngày sinh</label>
+                <div class="col-md-7">
+                <input type="date"
+                       class="form-control"
+                       name="BirthDay"
+                       required="required">
+                </div>
+            </div>
+
+          <!-- Giới tính -->
+            <div class="form-group">
+                <label class="col-md-3 control-label" for="Sex">Giới tính</label>
+                <div class="col-md-7">
+                <select name="Sex" class="form-control">
+                    <option value="">Chọn giới tính</option>
+                    <option value="1">Nam</option>
+                    <option value="0">Nữ</option>
+                </select>
+                </div>
+            </div>
+
+          <!-- gmail -->
+            <div class="form-group">
+                <label class="col-md-3 control-label" for="Email">Gmail</label>
+                <div class="col-md-7">
+                <input type="email"
+                       class="form-control"
+                       name="Email"
+                       placeholder="ABC@Gmail.com"
+                       required="required">
+                </div>
+            </div>
+
+          <!--   Số điện thoại -->
+            <div class="form-group">
+                <label class="col-md-3 control-label" for="PhoneNumber">Số điện thoại</label>
+                <div class="col-md-7">
+                 <input type="number"
+                        class="form-control"
+                        name="PhoneNumber"
+                        placeholder="Nhập số điện thoại"
+                        required="required">
+                </div>
+            </div>
+
+          <!-- start: Địa chỉ -->
+            <div class="form-group">
+                <label class="col-md-3 control-label" for="Address">Địa chỉ</label>
+                <div class="col-md-7">
+                <input type="text"
+                       class="form-control"
+                       name="Address"
+                       placeholder="Nhập địa chỉ"
+                       required="required">
+                </div>
+            </div>
+          <!-- end: Địa chỉ -->
+
+        </div>
+        <!-- end: body -->
+
+        <!-- start: footer -->
+        <footer class="panel-footer">
+            <div class="row">
+                <div class="col-sm-9 col-sm-offset-3">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button type="reset" class="btn btn-info" >Reset</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </footer>
+        <!-- end: footer -->
+      </form>
+    </div>
+  </div>
+</div>
+<!-- end: dialog add -->
+
+<!-- start: dialog edit -->
+<% student.forEach(function(rows){ %>
+<div class="modal fade model-edit<%= rows.ID_Student %>" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+    <!-- start: header -->
+    <header class="panel-heading">
+        <h2 class="panel-title">Sửa sinh viên</h2>
+        <p class="panel-subtitle">
+            Họ và tên: <%= rows.Name %>
+        </p>
+    </header>
+    <!-- end: header -->
+
+    <!-- start: body -->
+    <div class="modal-body">
+    <form class="form-horizontal form-bordered" action="/student/edit/<%= rows.ID_Student %>" method="POST" role="form">
+      <!-- Ảnh -->
+      <div class="form-group hidden">
+        <label class="col-md-3 control-label" for="Avatar">Ảnh</label>
+        <div class="col-md-7">
+          <input type="file"
+                 class="form-control"
+                 name="Avatar">
+        </div>
+      </div>
+
+      <!-- Họ và tên -->
+      <div class="form-group">
+          <label class="col-md-3 control-label" for="NameStudent">Họ và Tên</label>
+          <div class="col-md-7">
+            <input value="<%= rows.Name %>"
+                   type="text"
+                   class="form-control"
+                   name="NameStudent"
+                   required="required">
+          </div>
+      </div>
+
+      <!-- Tên lớp học -->
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="Description">Tên lớp học</label>
+            <div class="col-md-7">
+              <input type="text"
+                     value="<%= rows.Description %>"
+                     class="form-control"
+                     id="Description"
+                     name="Description"
+                     placeholder="Nhập tên lớp học"
+                     required="required">
+            </div>
+        </div>
+
+      <!-- Mã sinh viên -->
+      <div class="form-group">
+          <label class="col-md-3 control-label" for="StudentCode">Mã sinh viên</label>
+          <div class="col-md-7">
+            <input value="<%= rows.StudentCode %>"
+                   type="text"
+                  class="form-control"
+                  name="StudentCode"
+                  required="required">
+          </div>
+      </div>
+
+      <!-- Ngày sinh -->
+      <div class="form-group">
+          <label class="col-md-3 control-label" for="BirthDay">Ngày sinh</label>
+          <div class="col-md-7">
+            <input value="<%= rows.BirthDay %>"
+                   type="date"
+                   class="form-control"
+                   name="BirthDay"
+                   required="required">
+          </div>
+      </div>
+
+      <!-- Giới tính -->
+      <div class="form-group">
+          <label class="col-md-3 control-label" for="Sex">Giới tính</label>
+          <div class="col-md-7">
+            <select name="Sex" class="form-control">
+                <option value="<%= rows.Sex %>">
+                    <% if ((rows.Sex)=="1"){ %>
+                        Nam
+                    <% } else { %>
+                        Nữ
+                    <% } %>
+                </option>
+                <option value="1">Nam</option>
+                <option value="0">Nữ</option>
+            </select>
+          </div>
+      </div>
+
+      <!-- Địa chỉ -->
+      <div class="form-group">
+          <label class="col-md-3 control-label" for="Address">Địa chỉ</label>
+          <div class="col-md-7">
+            <input value="<%= rows.Address %>"
+                   type="text"
+                   class="form-control"
+                   name="Address"
+                   required="required">
+          </div>
+      </div>
+
+      <!-- Số điện thoại -->
+      <div class="form-group">
+          <label class="col-md-3 control-label" for="PhoneNumber">Số điện thoại</label>
+          <div class="col-md-7">
+            <input value="<%= rows.PhoneNumber %>"
+                   type="number"
+                   class="form-control"
+                   name="PhoneNumber"
+                   required="required">
+          </div>
+      </div>
+
+      <!-- Gmail -->
+      <div class="form-group">
+          <label class="col-md-3 control-label" for="Email">Gmail</label>
+          <div class="col-md-7">
+            <input value="<%= rows.Email %>"
+                   type="gmail"
+                   class="form-control"
+                   name="Email"
+                   required="required">
+          </div>
+      </div>
+
+      <!-- start: Tài khoản -->
+      <div class="form-group">
+      <label class="control-label col-md-3">Tài khoản</label>
+      <div class="col-md-7">
+        <section class="form-group-vertical">
+          <div class="input-group input-group-icon">
+            <span class="input-group-addon">
+              <span class="icon"><i class="fa fa-user"></i></span>
+            </span>
+            <input value="<%= rows.username %>"
+                   class="form-control"
+                   type="text"
+                   placeholder="Username"
+                   name="username">
+          </div>
+          <div class="input-group input-group-icon">
+            <span class="input-group-addon">
+              <span class="icon"><i class="fa fa-key"></i></span>
+            </span>
+            <input value="<%= rows.password %>"
+                   class="form-control"
+                   type="text"
+                   placeholder="Password"
+                   name="password">
+          </div>
+        </section>
+      </div>
+
+      </div>
+      <!-- end: Tài khoản -->
+
+    </div>
+    <!-- end: Body -->
+
+    <!-- start: footer -->
+    <footer class="panel-footer">
+        <div class="row">
+            <div class="col-sm-9 col-sm-offset-3">
+                <button type="submit" class="btn btn-primary">Save</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </footer>
+    <!-- end: footer -->
+
+    </form>
+    </div>
+  </div>
+</div>
+<% }) %>
+<!-- end: dialog edit -->
+
+
+<!-- start: dialog delete -->
+<% student.forEach(function(rows){ %>
+<div class="modal fade" id="Modal-Delete<%= rows.ID_Student %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+
+    <!-- start: header -->
+    <header class="panel-heading">
+        <h2 class="panel-title">Xóa sinh viên</h2>
+        <p class="panel-subtitle">
+            <%= rows.NameStudent %>
+        </p>
+    </header>
+    <!-- end: header -->
+
+    <!-- start: body -->
+    <div class="panel-body" style="color: red">
+        <div class="modal-wrapper">
+            <div class="modal-icon">
+                <i style="color: red" class="fa fa-times-circle"></i>
+            </div>
+            <div class="modal-text">
+                <h4><b>Chú ý !</b></h4>
+                <p>Nếu bạn xóa sinh viên <b><%= rows.NameStudent %></b> mọi thông tin liên quan sẽ bị xóa và không thể phục hồi.</p>
+            </div>
+        </div>
+    </div>
+    <!-- end: body -->
+
+    <form action="/student/delete/<%= rows.ID_Student %>/<%= rows.username %>" method="POST">
+        <!-- start: footer -->
+        <footer class="panel-footer">
+            <div class="row">
+                <div class="col-sm-9 col-sm-offset-3">
+                    <button type="submit" class="btn btn-primary">Đồng ý</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </footer>
+        <!-- end: footer -->
+    </form>
+
+    </div>
+  </div>
+</div>
+<% }) %>
+<!-- end: dialog delete -->
+
+<script>
+  var input = document.getElementById('input')
+
+  input.addEventListener('change', function() {
+    readXlsxFile(input.files[0], { dateFormat: 'DD/MM/YY' }).then(function(data) {
+
+      $.ajax({
+        url: '/student/import',
+        type: 'POST',
+        dataType: 'array',
+        contentType: "application/x-www-form-urlencoded;charset=utf-8",
+        data: {param1: data}
+      })
+      .always(function() {
+        alert("Import file sinh viên !!!");
+        window.location.reload();
+      });
+
+    }, (error) => {
+      console.error(error)
+      alert("Error while parsing Excel file. See console output for the error stack trace.")
+    })
+  })
+</script>

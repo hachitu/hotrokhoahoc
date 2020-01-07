@@ -1,0 +1,73 @@
+<header class="page-header">
+
+	<h2>Đăng bài diễn đàn</h2>
+
+	<div class="right-wrapper pull-right">
+		<ol class="breadcrumbs">
+			<li>
+				<a href="index.html">
+					<i class="fa fa-home"></i>
+				</a>
+			</li>
+			<li><span>Trang chủ</span></li>
+			<li><span><a href="/diendan/<%= ID_Classmodule %>">Diễn đàn</a></span></li>
+		</ol>
+
+		<a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
+	</div>
+</header>
+<div class="TruongThiHaTrang-form content-with-menu-container" data-mailbox data-mailbox-view="compose">
+	<div class="inner-body">
+		<div class="">
+			<div class="panel-body">
+				<form id="ADD" class="form-horizontal form-bordered form-bordered" action="/diendan/add" method="post" enctype="multipart/form-data">
+					<input type="hidden" name="ID_Classmodule" value="<%= ID_Classmodule %>">
+					<div class="form-group text-center">
+						<h1><b>Lớp: <%= Tenlophoc %></b> - Học phần: <%= Tenmonhoc %></h1>
+						<h3>Giảng viên: <%= Giangvien %></h3>
+						<h2>ĐĂNG BÀI VIẾT MỚI</h2>
+					</div>
+					<div class="form-group">
+						<label class="col-md-3 control-label" for="inputDefault">Tiêu đề</label>
+						<div class="col-md-6">
+							<input type="text" name="Title" class="form-control" id="inputDefault" required>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-md-3 control-label" for="inputSuccess">Loại bài đăng </label>
+						<div class="col-md-6">
+							<select name="Type" class="form-control input-lg mb-md" required>
+								<option value="1">Thông báo</option>
+								<option value="2">Hỏi đáp</option>
+								<option value="3">Thảo luận</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-md-3 control-label" for="inputDefault">Nội dung bài viết </label>
+						<div class="compose col-md-6">
+							<textarea required class="form-control ckeditor" name="content" id="content"></textarea>
+							<script>
+								CKEDITOR.replace( 'content', {
+									height: 300,
+									filebrowserUploadUrl: "upload.php"
+								});
+							</script>
+						</div>
+					</div>
+					<div class="inner-toolbar clearfix">
+						<ul>
+							<li>
+								<input type="submit" class="btn btn-success" value="Đăng bài">
+								<!-- <a href="javascript:{}" onclick="document.getElementById('ADD').submit();"><i class="fa fa-send-o mr-sm"></i> Đăng bài</a> -->
+							</li>
+							<li>
+								<input type="file" name="myFiles" multiple>
+							</li>
+						</ul>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

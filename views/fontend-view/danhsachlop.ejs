@@ -1,0 +1,99 @@
+
+<% if (locals.mess){ %>
+  <h1><%=mess%></h1>
+<% }else{ %>
+<section class="content-with-menu content-with-menu-has-toolbar media-gallery">
+	<div class="content-with-menu-container">
+		<div class="inner-body mg-main">
+			<div class="inner-toolbar clearfix">
+				<ul>
+					<li class="right" data-sort-source data-sort-id="media-gallery"></li>
+				</ul>
+			</div>
+			<h1 class="text-center">DANH SÁCH SINH VIÊN ĐĂNG KÝ LỚP HỌC</h1>
+			<hr>
+			<div class="row mg-files" data-sort-destination data-sort-id="media-gallery">
+				<% if (students==""){ %>
+					<section class="body-error error-inside">
+						<div class="center-error">
+							<div class="row">
+								<div class="col-md-12">
+									<div class="main-error mb-xlg">
+										<p class="error-explanation text-center">Hiện tại chưa có sinh viên nào đăng ký lớp học!</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</section>
+				<% } %>
+				<% students.forEach(function(row){  %>
+				<div class="isotope-item mh<%= row.ID_Subject %> col-sm-6 col-md-4 col-lg-3">
+					<div class="thumbnail">
+						<div class="thumb-preview">
+							<a class="thumb-image" href="../../img/AvatarNull.png">
+								<%if (row.Avatar != "") { %>
+								<img 	style="max-width: 287px; max-height: 287px"
+										width="100%"
+										height="100%"
+										src="../../img/<%= row.Avatar %>"
+										class="img-responsive"
+										alt="Project">
+								<% }else{ %>
+								   <img src="../../img/AvatarNull.png" class="img-responsive" alt="Project">
+								<% } %>
+							</a>
+							<div class="mg-thumb-options">
+								<div class="mg-zoom"><i class="fa fa-search"></i></div>
+                <% if(status==0){ %>
+								<div class="mg-toolbar">
+									<div class="mg-option checkbox-custom checkbox-inline">
+										<input type="checkbox" id="file_1" value="1">
+                    <form action="/diendan/duyet" method="post">
+  											<!-- ID DETAIL -->
+								        <input hidden="hidden" type="text" name="ID_Detail" value="<%= ID_Detail %>">
+										    <input type="submit" class="mb-xs mt-xs mr-xs btn btn-primary" value="DUYỆT" onclick="return confirm('Bạn có thực sự muốn duyệt sinh viên : <%= row.Name %> ?')">
+										</form>
+										<!-- <button type="button" class="mb-xs mt-xs mr-xs btn btn-success" onclick="location.href='diendan/<%= row.ID_Classmodule %>';"><b>DUYỆT</b></button> -->
+									</div>
+									<div class="mg-group pull-right">
+                    <form action="/diendan/huy" method="post">
+  											<!-- ID DETAIL -->
+								        <input hidden="hidden" type="text" name="ID_Detail" value="<%= ID_Detail %>">
+										    <input type="submit" class="mb-xs mt-xs mr-xs btn btn-danger" value="HỦY" onclick="return confirm('Bạn có muốn hủy sinh viên <%= row.Name %> không ?')">
+										</form>
+									</div>
+								</div>
+                <% } else { %>
+                  <div class="mg-toolbar">
+  									<div class="mg-option checkbox-custom checkbox-inline">
+  										<h3>Đã duyệt</h3>
+  									</div>
+  								</div>
+                <% } %>
+							</div>
+						</div>
+						<h5 class="mg-title text-semibold"><b><%= row.Name %></b><small></small></h5>
+						<br>
+						<h5><b>MSV :</b> <%= row.StudentCode %><small></small></h5>
+						<h5><b>Lớp :</b> <%= row.Description %><small></small></h5>
+						<hr>
+					</div>
+				</div>
+				<% }); %>
+
+			</div>
+		</div>
+	</div>
+</section>
+<% } %>
+
+
+<script>
+var map = {};
+$('select option').each(function () {
+    if (map[this.value]) {
+        $(this).remove()
+    }
+    map[this.value] = true;
+})
+</script>

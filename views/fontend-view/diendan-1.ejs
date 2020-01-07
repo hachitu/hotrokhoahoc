@@ -1,0 +1,299 @@
+<header class="page-header">
+	<h2><%= Tenlophoc %></h2>
+
+	<div class="right-wrapper pull-right">
+		<ol class="breadcrumbs">
+			<li>
+				<a href="index.html">
+					<i class="fa fa-home"></i>
+				</a>
+			</li>
+			<li><a href="/khoahochientai"><span>Khóa học hiện tại</span></a></li>
+		</ol>
+
+		<a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
+	</div>
+</header>
+
+<!-- start: page -->
+<section class="content-with-menu mailbox">
+	<div class="content-with-menu-container" data-mailbox data-mailbox-view="folder">
+
+		<div class="inner-body mailbox-folder">
+			<!-- START: .mailbox-header -->
+			<header class="mailbox-header">
+				<div class="row">
+					<div class="col-sm-6">
+						<h1 class="mailbox-title text-light m-none">
+							<a id="mailboxToggleSidebar" class="sidebar-toggle-btn trigger-toggle-sidebar">
+								<span class="line"></span>
+								<span class="line"></span>
+								<span class="line"></span>
+								<span class="line line-angle1"></span>
+								<span class="line line-angle2"></span>
+							</a>
+
+							<b>Học phần: <%= Tenmonhoc %> - <%= Giangvien %></b>
+						</h1>
+					</div>
+					<div class="col-sm-6">
+						<div class="search">
+							<div class="input-group input-search">
+								<input type="text" class="form-control" name="q" id="q" placeholder="Search...">
+								<span class="input-group-btn">
+									<button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
+								</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</header>
+			<!-- END: .mailbox-header -->
+
+			<!-- START: .mailbox-actions -->
+			<div class="mailbox-actions">
+				<% if(Status!=1) { %>
+				<ul class="list-unstyled m-none pt-lg pb-lg">
+					<li class="ib mr-sm">
+						<% if(user[0].decentralization == 3){ %>
+						<% if(topic!="") { %>
+							<a class="btn btn-success" href="/diendan/thembaiviet/<%= ID_Forum %>"> Thêm bài viết</a>
+						<% } %>
+						<% } else { %>
+							<a class="btn btn-success" href="/diendan/thembaiviet/<%= ID_Forum %>"> Thêm bài viết</a>
+						<% } %>
+					</li>
+					<li class="ib mr-sm">
+						<% if(user[0].decentralization == 2){ %>
+							<% if(topic!="") { %>
+								<form id="CLOSE" action="/diendan/close" method="post">
+									<input type="hidden" name="ID_Classmodule" value="<%= ID_Forum %>">
+									<a class="btn btn-danger" href="javascript:{}" onclick="SubmitClose();">Đóng lớp học</a>
+								</form>
+
+								<script>
+									function SubmitClose(){
+										var r = confirm("Đóng lớp học ?");
+
+										if (r==true) {
+											document.getElementById('CLOSE').submit();
+										}else{
+
+										}
+									}
+								</script>
+							<% } %>
+						<% }; %>
+					</li>
+					<li class="ib mr-sm">
+						<% if(user[0].decentralization == 2){ %>
+						<% if(topic!="") { %>
+						<button class="btn btn-primary" data-toggle="modal" data-target="#modalBootstrap" >Nhập điểm</button>
+						<% } %>
+						<% }; %>
+					</li>
+					<li class="ib mr-sm">
+						<!-- Modal Bootstrap -->
+						<div class="modal fade" id="modalBootstrap" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+										<h4 class="modal-title" id="myModalLabel">Nhập điểm bằng File</h4>
+									</div>
+									<div class="modal-body">
+										<label for="">Chọn file import đúng định dạng</label>
+										<input type="file" id="input" />
+										<label for="">Danh sách sinh viên trong lớp:</label>
+										<a href="/student/testExport/<%= ID_Forum %>"> Download File</a>
+									</div>
+									<div class="modal-footer">
+										<div class="alert alert-danger">
+											<strong>Chú ý!</strong> Xem xét kỹ lại file trước khi nhập điểm ? <a href="" class="alert-link">Nếu bạn nhập sai </a> bạn sẽ phải lên phòng quản lý đào tạo để yêu cầu sửa.
+										</div>
+										<button class="btn btn-success" onclick="import_point();">Nhập điểm</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</li>
+					<li class="ib mr-sm">
+						<div class="btn-group">
+							<a href="#" class="item-action fa fa-chevron-down dropdown-toggle" data-toggle="dropdown"></a>
+
+							<ul class="dropdown-menu" role="menu">
+								<li><a href="#">All</a></li>
+								<li><a href="#">None</a></li>
+								<li><a href="#">Read</a></li>
+								<li><a href="#">Unread</a></li>
+								<li><a href="#">Starred</a></li>
+								<li><a href="#">Unstarred</a></li>
+							</ul>
+						</div>
+					</li>
+					<li class="ib mr-sm">
+						<a class="item-action fa fa-refresh" href="#"></a>
+					</li>
+					<li class="ib mr-sm">
+						<a class="item-action fa fa-tag" href="#"></a>
+					</li>
+					<li class="ib">
+						<a class="item-action fa fa-times text-danger" href="#"></a>
+					</li>
+				</ul>
+				<% } else { %>
+				<h1 class="text-danger"> LỚP HỌC ĐÃ ĐÓNG !</h1>
+				<%	} %>
+			</div>
+			<!-- END: .mailbox-actions -->
+
+			<div id="mailbox-email-list" class="mailbox-email-list">
+				<div class="nano">
+					<div class="nano-content">
+						<ul id="" class="list-unstyled">
+							<% if(topic!="") { %>
+							<% topic.forEach(function(rows){ %>
+							<input type="hidden" id="ID_Subject" name="ID_Subject" value="<%= ID_Subject %>">
+							<li class="unread">
+								<% if(rows.ID_Account == user[0].ID_Account) { %>
+								<a href="javascript:{}" onclick="Submit(<%= rows.ID_Topic %>);"><i class="mail-label fa fa-times text-danger"></i></a>
+								<% }; %>
+								<form id="DELETE<%= rows.ID_Topic %>" action="/diendan/delete/<%= rows.ID_Topic %>" method="post">
+									<input type="text" name="ID_Classmodule" hidden="hidden" value="<%= ID_Forum %>">
+								</form>
+								<script>
+									function Submit(ID_Topic){
+											var r = confirm("Bạn có thực sự muốn xóa bài đăng này không ? Tất cả bình luận và file trong bài đăng sẽ bị xóa !!!");
+										if (r==true) {
+											document.getElementById('DELETE'+ID_Topic).submit();
+										}else{
+
+										}
+									}
+								</script>
+								<a href="/diendan/<%= ID_Forum %>/<%= rows.ID_Topic %>">
+									<div class="col-sender">
+										<% if(rows.Type == '1'){ %>
+										<i class="fa fa-bell"></i>
+										<% } %>
+										<% if(rows.Type == '3'){ %>
+										<i class="fa fa-comments-o"></i>
+										<% } %>
+										<% if(rows.Type == '2'){ %>
+										<i class="fa fa-question"></i>
+										<% } %>
+
+										<p class="m-none ib"><b><%= rows.Name %></b></p>
+
+									</div>
+									<div class="col-mail">
+										<p class="m-none mail-content">
+											<span class="subject">| <%= rows.Title %> </span>
+											<!-- <span class="mail-partial"><i><%= rows.Content %></i></span> -->
+										</p>
+										<p class="text-right"> | <%= rows.Time %></p>
+									</div>
+								</a>
+							</li>
+							<% }); %>
+							<% } else { %>
+							<h1 class="text-center text-danger"><b>LỚP HỌC CHƯA MỞ !!!</b></h1>
+							<img class="img1" width="230px" height="200px" src="https://static.vecteezy.com/system/resources/previews/000/436/200/non_2x/vector-closed-sign-icon.jpg" alt="">
+							<style>
+								.img1 {
+									display: block;
+									margin-left: auto;
+									margin-right: auto;
+								}
+							</style>
+							<% if(user[0].decentralization == 2){ %>
+							<h2 class="text-center text-success">Đăng bài viết đầu tiên để bắt đầu mở lớp !!!</h2>
+							<% }; %>
+							<% } %>
+
+							<!-- <li class="unread">
+								<a href="mailbox-email.html">
+									<div class="col-sender">
+										<i class="fa fa-bell"></i>
+										<p class="m-none ib">Okler Themes</p>
+									</div>
+									<div class="col-mail">
+										<p class="m-none mail-content">
+											<span class="subject">Check out our new Porto Admin theme! &nbsp;–&nbsp;</span>
+											<span class="mail-partial">We are proud to announce that our new theme Porto Admin is ready, wants to know more about it?</span>
+										</p>
+										<p class="m-none mail-date">11:35 am</p>
+									</div>
+								</a>
+							</li>
+
+							<li>
+								<a href="mailbox-email.html">
+									<i class="mail-label" style="border-color: #EA4C89"></i>
+
+									<div class="col-sender">
+										<i class="fa fa-comments-o"></i>
+										<p class="m-none ib">Okler Themes</p>
+									</div>
+									<div class="col-mail">
+										<p class="m-none mail-content">
+											<span class="subject">Porto Admin theme! &nbsp;–&nbsp;</span>
+											<span class="mail-partial">Check it out.</span>
+										</p>
+										<i class="mail-attachment fa fa-paperclip"></i>
+										<p class="m-none mail-date">3:35 pm</p>
+									</div>
+								</a>
+							</li>
+
+							<li>
+								<a href="mailbox-email.html">
+									<div class="col-sender">
+										<i class="fa fa-question"></i>
+										<p class="m-none ib">Okler Themes</p>
+									</div>
+									<div class="col-mail">
+										<p class="m-none mail-content">
+											<span class="subject">Check out our new Porto Admin theme! &nbsp;–&nbsp;</span>
+											<span class="mail-partial">We are proud to announce that our new theme Porto Admin is ready, wants to know more about it?</span>
+										</p>
+										<p class="m-none mail-date">Jul 03</p>
+									</div>
+								</a>
+							</li> -->
+
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		function import_point(){
+			var input = document.getElementById('input')
+			var ID_Subject = document.getElementById('ID_Subject').value;
+
+			readXlsxFile(input.files[0], { dateFormat: 'DD/MM/YY' }).then(function(data) {
+
+				$.ajax({
+					url: '/student/import_point',
+					type: 'POST',
+					dataType: 'array',
+					contentType: "application/x-www-form-urlencoded;charset=utf-8",
+					data: {
+						param1: data,
+						ID_Subject: ID_Subject
+					}
+				})
+				.always(function() {
+					alert("Import file sinh viên !!!");
+					window.location.reload();
+				});
+
+			}, (error) => {
+				console.error(error)
+				alert("Error while parsing Excel file. See console output for the error stack trace.")
+			})
+		}
+	</script>

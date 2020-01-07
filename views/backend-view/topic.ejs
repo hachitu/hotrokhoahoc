@@ -1,0 +1,281 @@
+<!-- start: page  -->
+<section class="panel">
+    <header class="panel-heading">
+        <div class="panel-actions">
+            <a href="#" class="fa fa-caret-down"></a>
+            <a href="#" class="fa fa-times"></a>
+        </div>
+
+        <h2 class="panel-title">Quản lý bài viết</h2>
+    </header>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="mb-md">
+                    <% include ../partials/messages %>
+                    <button id="addToTable" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Add <i class="fa fa-plus"></i></button>
+                </div>
+            </div>
+        </div>
+        <table class="table table-bordered table-striped mb-none" id="datatable-tabletools" data-swf-path="/vendor/jquery-datatables/extras/TableTools/swf/copy_csv_xls_pdf.swf">
+            <thead>
+                <tr>
+                    <th>Mã bài viết</th>
+                    <th>Mã diễn đàn</th>
+                    <th>Mã người tạo</th>
+                    <th>Thời gian tạo</th>
+                    <th>Thời gian sửa</th>
+                    <th>Kiểu</th>
+                    <th>Tiêu đề</th>
+                    <th>Nội dung</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% topic.forEach(function(rows){ %>
+                    <tr>
+                        <td><%= rows.ID_Topic %></td>
+                        <td><%= rows.FK_ID_Classmodule %></td>
+                        <td><%= rows.ID_Account %></td>
+                        <td><%= rows.Time %></td>
+                        <td><%= rows.TimeEdit %></td>
+                        <td><%= rows.Type %></td>
+                        <td><%= rows.Title %></td>
+                        <td><%= rows.Content %></td>
+                        <td class="actions">
+                            <a href="#" data-toggle="modal" data-target=".model-edit<%= rows.ID_Topic %>"><i class="fa fa-pencil"></i></a>
+                            <a href="#"><i class="fa fa-trash-o" data-toggle="modal" data-target="#Modal-Delete<%= rows.ID_Topic %>"></i></a>
+                        </td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+</section>
+<!-- end: page -->
+
+
+
+<!-- start: dialog add -->
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <!-- start: header -->
+      <header class="panel-heading">
+          <h2 class="panel-title">Thêm bài viết</h2>
+          <p class="panel-subtitle">
+              Điền đầy đủ và chính xác của bài viết vào form bên dưới.
+          </p>
+      </header>
+      <!-- start: header -->
+
+      <!-- start: body --> 
+      <div class="modal-body">
+        <form class="form-horizontal form-bordered" action="/topic/add" method="POST" >
+
+          <!-- forum -->
+          <div class="form-group">
+              <label class="col-md-3 control-label" for="Sex">Diễn đàn </label>
+              <div class="col-md-7">
+              <select name="ID_Classmodule" class="form-control">
+                <% classmodule.forEach(function(rows){ %>
+                  <option value="<%= rows.ID_Classmodule %>"><%= rows.NameClass %></option>
+                <% }); %>
+              </select>
+              </div>
+          </div>
+      
+          <!-- type -->
+          <div class="form-group">
+              <label class="col-md-3 control-label" for="Sex">Loại </label>
+              <div class="col-md-7">
+              <select name="Type" class="form-control">
+                  <option value="1">Thông báo</option>
+                  <option value="2">Hỏi đáp</option>
+                  <option value="3">Thảo luận</option>
+              </select>
+              </div>
+          </div>
+
+          <!-- Tiêu đề -->
+          <div class="form-group">
+              <label class="col-md-3 control-label" for="chuyencan">Tiêu đề </label>
+              <div class="col-md-7"> 
+                <input type="text" 
+                       class="form-control" 
+                       name="Title" 
+                       required="required">
+              </div>
+          </div>
+
+          <!-- start: nội dung -->
+          <div class="form-group">
+              <label class="col-md-3 control-label" for="Content">Nội dung </label>
+              <div class="col-md-7"> 
+                <input type="text" 
+                       class="form-control" 
+                       name="Content" 
+                       required="required">
+              </div>
+          </div>
+          <!-- end: nội dung -->
+
+        </div>
+        <!-- end: body --> 
+
+        <!-- start: footer -->
+        <footer class="panel-footer">
+            <div class="row">
+                <div class="col-sm-9 col-sm-offset-3">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button type="reset" class="btn btn-info" >Reset</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </footer>
+        <!-- end: footer -->
+      </form>
+    </div>
+  </div>
+</div>
+<!-- end: dialog add -->
+
+<!-- start: dialog edit -->
+<% topic.forEach(function(rows){ %>
+<div class="modal fade model-edit<%= rows.ID_Topic %>" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+    <!-- start: header -->
+    <header class="panel-heading">
+        <h2 class="panel-title">Sửa bài viết</h2>
+        <p class="panel-subtitle">
+            Tiêu đề : <%= rows.Title %>
+        </p>
+    </header>
+    <!-- end: header -->
+
+    <!-- start: body -->
+    <div class="modal-body">
+    <form class="form-horizontal form-bordered" action="/topic/edit/<%= rows.ID_Topic %>" method="POST" role="form">
+      
+      <!-- type -->
+      <div class="form-group">
+          <label class="col-md-3 control-label" for="Type">Loại </label>
+          <div class="col-md-7">
+          <select name="Type" class="form-control">
+              <option value="<%= rows.Type %>">
+
+              <% if(rows.Type == 1 ){ %>
+                Thông báo
+              <% } %>
+
+              <% if (rows.Type == 2){ %>
+                Hỏi đáp
+               <% } %>
+
+              <% if (rows.Type == 3){ %>
+                Thảo luận
+              <% } %>
+
+              </option>
+              <option value="1">Thông báo</option>
+              <option value="2">Hỏi đáp</option>
+              <option value="3">Thảo luận</option>
+          </select>
+          </div>
+      </div>
+
+      <!-- Tiêu đề -->
+      <div class="form-group">
+          <label class="col-md-3 control-label" for="Title">Tiêu đề </label>
+          <div class="col-md-7"> 
+            <input type="text" 
+                   class="form-control" 
+                   name="Title" 
+                   required="required"
+                   value="<%= rows.Title %>">
+          </div>
+      </div>
+
+      <!-- start: nội dung -->
+      <div class="form-group">
+          <label class="col-md-3 control-label" for="Content">Nội dung </label>
+          <div class="col-md-7"> 
+            <input type="text" 
+                   class="form-control" 
+                   name="Content" 
+                   required="required"
+                   value="<%= rows.Content %>">
+          </div>
+      </div>
+      <!-- end: nội dung -->
+
+    </div>
+    <!-- end: Body -->
+
+    <!-- start: footer -->
+    <footer class="panel-footer">
+        <div class="row">
+            <div class="col-sm-9 col-sm-offset-3">
+                <button type="submit" class="btn btn-primary">Save</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </footer>
+    <!-- end: footer -->
+
+    </form>
+    </div>
+  </div>
+</div>
+<% }) %>
+<!-- end: dialog edit -->
+
+
+<!-- start: dialog delete -->
+<% topic.forEach(function(rows){ %>
+<div class="modal fade" id="Modal-Delete<%= rows.ID_Topic %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+    
+    <!-- start: header -->
+    <header class="panel-heading">
+        <h2 class="panel-title">Xóa bài viết</h2>
+        <p class="panel-subtitle">
+          Tiêu đề : <%= rows.Title %>
+        </p>
+    </header>
+    <!-- end: header -->
+
+    <!-- start: body -->
+    <div class="panel-body" style="color: red">
+        <div class="modal-wrapper">
+            <div class="modal-icon">
+                <i style="color: red" class="fa fa-times-circle"></i>
+            </div>
+            <div class="modal-text">
+                <h4><b>Chú ý !</b></h4>
+                <p>Nếu bạn xóa bài viết <b><%= rows.Title %></b>. mọi thông tin liên quan sẽ bị xóa và không thể phục hồi.</p>
+            </div>
+        </div>
+    </div>
+    <!-- end: body -->
+
+    <form action="/topic/delete/<%= rows.ID_Topic %>/<%= rows.username %>" method="POST"> 
+        <!-- start: footer -->
+        <footer class="panel-footer">
+            <div class="row">
+                <div class="col-sm-9 col-sm-offset-3">
+                    <button type="submit" class="btn btn-primary">Đồng ý</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </footer>
+        <!-- end: footer -->
+    </form>
+
+    </div>
+  </div>
+</div>
+<% }) %>
+<!-- end: dialog delete

@@ -1,0 +1,157 @@
+<section class="content-with-menu content-with-menu-has-toolbar media-gallery">
+	<div class="content-with-menu-container">
+		<div class="inner-body mg-main">
+			<div class="inner-toolbar clearfix">
+				<ul>
+					<li class="right" data-sort-source data-sort-id="media-gallery">
+						<!-- MENU -->
+					</li>
+				</ul>
+			</div>
+
+			<h1 class="text-center">DANH SÁCH KHÓA HỌC HIỆN TẠI</h1>
+			<hr>
+			<div class="row mg-files" data-sort-destination data-sort-id="media-gallery">
+				<% if (listclass== ""){ %>
+					<section class="body-error error-inside">
+						<div class="center-error">
+							<div class="row">
+								<div class="col-md-12">
+									<div class="main-error mb-xlg">
+										<!-- <h2 class="error-code text-dark text-center text-semibold m-none">404 <i class="fa fa-file"></i></h2> -->
+										<p class="error-explanation text-center">Hiện tại bạn chưa đăng ký khóa học nào cả.</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</section>
+				<% } %>
+				<% listclass.forEach(function(row){  %>
+					<% if (user[0].ID_Student==undefined){ %>
+					<div class="isotope-item mh<%= row.ID_Subject %> col-sm-6 col-md-4 col-lg-3">
+						<div class="thumbnail">
+							<div class="thumb-preview">
+								<a class="thumb-image" href="assets/images/projects/project-1.jpg">
+									<%if (row.Image != "") { %>
+									<img 	style="max-width: 287px; max-height: 287px"
+											width="100%"
+											height="100%"
+											src="img/<%= row.Image %>"
+											class="img-responsive"
+											alt="Project">
+									<% }else{ %>
+									<img src="assets/images/projects/project-1.jpg" class="img-responsive" alt="Project">
+									<% } %>
+								</a>
+								<div class="mg-thumb-options">
+									<div class="mg-zoom"><i class="fa fa-search"></i></div>
+									<div class="mg-toolbar">
+										<div class="mg-option checkbox-custom checkbox-inline">
+											<input type="checkbox" id="file_1" value="1">
+											<button type="button" class="mb-xs mt-xs mr-xs btn btn-primary" onclick="location.href='diendan/<%= row.ID_Classmodule %>';"><b>DIỄN ĐÀN</b></button>
+										</div>
+										<div class="mg-group pull-right">
+											<button type="button" class="mb-xs mt-xs mr-xs btn btn-primary" onclick="location.href='diendan/danhsachlop/<%= row.ID_Classmodule %>';"><b>DUYỆT SV</b></button>
+										</div>
+									</div>
+								</div>
+							</div>
+							<h5 class="mg-title text-semibold"><b><%= row.NameClass %></b></h5>
+							<br>
+							<h5><b>Học phần :</b> <%= row.NameSubject %><small></small></h5>
+
+							<% var t = 0;  %>
+							<% listdetailclassmodule.forEach(function(row2){ %>
+								<% if( row.ID_Classmodule   == row2.ID_Classmodule) { %>
+									<% t++;%>
+								<%}%>
+							<%});%>
+
+							<h5 style="text-align: right;"><b> <%=t%> </b> /<%= row.CountStudent %><small></small></h5>
+							<hr>
+							<div class="mg-description">
+								<small class="pull-left text-muted">Start : <%= row.TimeStart %></small>
+								<small class="pull-right text-muted">End : <%= row.TimeEnd %></small>
+							</div>
+						</div>
+					</div>
+					<% }else{ %>
+						<div class="isotope-item mh<%= row.ID_Subject %> col-sm-6 col-md-4 col-lg-3">
+							<div class="thumbnail">
+								<div class="thumb-preview">
+									<a class="thumb-image" href="assets/images/projects/project-1.jpg">
+										<%if (row.Image != "") { %>
+										<img 	width="287px"
+												height="287px"
+												src="img/<%= row.Image %>"
+												class="img-responsive"
+												alt="Project">
+										<% }else{ %>
+										<img src="assets/images/projects/project-1.jpg" class="img-responsive" alt="Project">
+										<% } %>
+									</a>
+									<div class="mg-thumb-options">
+										<div class="mg-zoom"><i class="fa fa-search"></i></div>
+										<div class="mg-toolbar">
+											<div class="mg-option checkbox-custom checkbox-inline">
+												<input type="checkbox" id="file_1" value="1">
+												<button <% if (row.status == 0) { %>
+												 disabled
+												<% } %> type="button" class="mb-xs mt-xs mr-xs btn btn-primary" onclick="location.href='diendan/<%= row.ID_Classmodule %>';">
+													<b>DIỄN ĐÀN</b>
+												</button>
+											</div>
+											<div class="mg-group pull-right">
+												<% if (row.status == 0) { %>
+													<form action="/diendan/huy" method="post">
+  		  											<!-- ID DETAIL -->
+  										        <input hidden="hidden" type="text" name="ID_Detail" value="<%= row.ID_Detail %>">
+  												    <input type="submit" class="mb-xs mt-xs mr-xs btn btn-danger" value="Hủy" onclick="return confirm('Bạn có muốn hủy đăng ký lớp học này ?')">
+  												</form>
+												<% } %>
+											</div>
+										</div>
+									</div>
+								</div>
+								<h5 class="mg-title text-semibold"><b><%= row.NameClass %></b></h5>
+								<br>
+								<% if (row.status == 0) { %>
+									<h5 style="color:red"><b>Chưa được duyệt</b></h5>
+								<% } %>
+								<h5><b>Học phần :</b> <%= row.NameSubject %><small></small></h5>
+								<h5><b>Giảng viên :</b> <%= row.Name %><small></small></h5>
+
+								<% var t = 0;  %>
+								<% listdetailclassmodule.forEach(function(row2){ %>
+									<% if( row.ID_Classmodule   == row2.ID_Classmodule) { %>
+										<% t++;%>
+									<%}%>
+								<%});%>
+
+								<h5 style="text-align: right;"><b> <%=t%> </b> /<%= row.CountStudent %><small></small></h5>
+								<!-- <h5 style="text-align: right;"><b><%= row.CountStudent %></b> /<%= row.CountStudent %><small></small></h5> -->
+								<!-- <h5 style="text-align: right;"><b><%= row.CountStudent %></b> /40<small></small></h5> -->
+								<hr>
+								<div class="mg-description">
+									<small class="pull-left text-muted">Start : <%= row.TimeStart %></small>
+									<small class="pull-right text-muted">End : <%= row.TimeEnd %></small>
+								</div>
+							</div>
+						</div>
+					<% } %>
+				<% }); %>
+
+			</div>
+		</div>
+	</div>
+</section>
+
+<script>
+var map = {};
+$('select option').each(function () {
+    if (map[this.value]) {
+        $(this).remove()
+    }
+    map[this.value] = true;
+})
+</script>

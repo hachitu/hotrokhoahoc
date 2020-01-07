@@ -1,0 +1,450 @@
+<!-- start: page -->
+<section class="panel">
+    <header class="panel-heading">
+        <div class="panel-actions">
+            <a href="#" class="fa fa-caret-down"></a>
+            <a href="#" class="fa fa-times"></a>
+        </div>
+
+        <h2 class="panel-title">Quản lý giảng viên</h2>
+    </header>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-sm-12">
+              <div class="col-sm-6">
+                <div class="mb-md">
+                    <% include ../partials/messages %>
+                    <button id="addToTable" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Add <i class="fa fa-plus"></i></button>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <label for="">Chọn file import đúng định dạng</label>
+                <input type="file" id="input" />
+                <label for="">File mẫu</label>
+                <a href="read-excel-file/Teacher.xlsx">Download File</a>
+              </div>
+            </div>
+        </div>
+        <table class="table table-bordered table-striped mb-none" id="datatable-tabletools" data-swf-path="/vendor/jquery-datatables/extras/TableTools/swf/copy_csv_xls_pdf.swf">
+            <thead>
+                <tr>
+                    <th>Avatar</th>
+                    <th>Mã giảng viên</th>
+                    <th>Tên giảng viên</th>
+                    <th>Ngày sinh</th>
+                    <th>Số điện thoại</th>
+                    <th>Email</th>
+                    <th>Giới tính</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% teacher.forEach(function(rows){ %>
+                    <tr>
+                        <td><img width="70px" height="70px" src="/img/<%= rows.Avatar %>" alt="Avatar"></td>
+                        <td><%= rows.TeacherCode %></td>
+                        <td><%= rows.Name %></td>
+                        <td><%= rows.BirthDay %></td>
+                        <td><%= rows.PhoneNumber %></td>
+                        <td><%= rows.Email %></td>
+                        <% if(rows.Sex==1){ %>
+                          <td>Nam</td>
+                        <% }else{ %>
+                          <td>Nữ</td>
+                        <% } %>
+                        <td class="actions">
+                            <a href="#" data-toggle="modal" data-target=".model-edit<%= rows.ID_Teacher %>"><i class="fa fa-pencil"></i></a>
+                            <a href="#"><i class="fa fa-trash-o" data-toggle="modal" data-target="#Modal-Delete<%= rows.ID_Teacher %>"></i></a>
+                        </td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+</section>
+<!-- end: page -->
+
+
+
+<!-- start: dialog add -->
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+
+      <!-- start: header -->
+      <header class="panel-heading">
+          <h2 class="panel-title">Thêm giảng viên</h2>
+          <p class="panel-subtitle">
+              Điền đầy đủ và chính xác của giảng viên vào form bên dưới.
+          </p>
+      </header>
+      <!-- end: header -->
+
+      <!-- start: body -->
+      <div class="modal-body">
+        <form class="form-horizontal form-bordered" action="/teacher/add" method="POST" >
+
+          <!-- Avatar -->
+            <div class="form-group hidden">
+                <label class="col-md-3 control-label" for="Avatar">Ảnh</label>
+                <div class="col-md-7">
+                  <input type="file"
+                         class="form-control" 
+                         name="Avatar">
+                </div>
+            </div>
+
+          <!-- Mã giảng viên -->
+            <div class="form-group">
+                <label class="col-md-3 control-label" for="TeacherCode">Mã giảng viên</label>
+                <div class="col-md-7">
+                  <input type="text" 
+                         class="form-control" 
+                         name="TeacherCode" 
+                         id="TeacherCode" 
+                         placeholder="Nhập mã giảng viên" 
+                         required="required">
+                </div>
+            </div>
+             
+          <!-- Họ và tên -->
+            <div class="form-group">
+                <label class="col-md-3 control-label" for="NameTeacher">Họ và Tên</label>
+                <div class="col-md-7">
+                  <input type="text" 
+                         class="form-control" 
+                         id="NameTeacher" 
+                         name="NameTeacher" 
+                         placeholder="Nhập họ và tên" 
+                         required="required">
+                </div>
+            </div>
+
+          <!-- Tài khoản -->
+            <div class="form-group">
+              <label class="control-label col-md-3">Tài khoản</label>
+              <div class="col-md-7">
+                <section class="form-group-vertical">
+                  <div class="input-group input-group-icon">
+                    <span class="input-group-addon">
+                      <span class="icon"><i class="fa fa-user"></i></span>
+                    </span>
+                    <input class="form-control" 
+                           type="username" 
+                           placeholder="Username" 
+                           name="username"
+                           required="required">
+                  </div>
+                  <div class="input-group input-group-icon">
+                    <span class="input-group-addon">
+                      <span class="icon"><i class="fa fa-key"></i></span>
+                    </span>
+                    <input class="form-control" 
+                           type="password" 
+                           placeholder="Password" 
+                           name="password"
+                           required="required">
+                  </div>
+                </section>
+              </div>
+            </div>
+
+          <!-- Ngày sinh -->
+            <div class="form-group">
+                <label class="col-md-3 control-label" for="BirthDay">Ngày sinh</label>
+                <div class="col-md-7">
+                <input type="date" 
+                       class="form-control" 
+                       name="BirthDay" 
+                       required="required">
+                </div>  
+            </div>
+
+          <!-- Giới tính -->
+            <div class="form-group">
+                <label class="col-md-3 control-label" for="Sex">Giới tính</label>
+                <div class="col-md-7">
+                <select name="Sex" class="form-control">
+                    <option value="">Chọn giới tính</option>
+                    <option value="1">Nam</option>
+                    <option value="0">Nữ</option>
+                </select>
+                </div>
+            </div>
+
+          <!-- gmail -->
+            <div class="form-group">
+                <label class="col-md-3 control-label" for="Email">Gmail</label>
+                <div class="col-md-7">
+                <input type="email" 
+                       class="form-control" 
+                       name="Email" 
+                       placeholder="Gmail của bạn@Gmail.com" 
+                       required="required">
+                </div>
+            </div>
+
+          <!-- start: Số điện thoại -->
+            <div class="form-group">
+                <label class="col-md-3 control-label" for="PhoneNumber">Số điện thoại</label>
+                <div class="col-md-7">
+                 <input type="number" 
+                        class="form-control" 
+                        name="PhoneNumber" 
+                        placeholder="Nhập số điện thoại" 
+                        required="required">
+                </div>
+            </div>
+          <!-- end: số điện thoại -->
+
+        </div>
+        <!-- end: body -->
+
+        <!-- start: footer -->
+        <footer class="panel-footer">
+            <div class="row">
+                <div class="col-sm-9 col-sm-offset-3">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button type="reset" class="btn btn-info" >Reset</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </footer>
+        <!-- start: footer -->
+
+      </form>
+    </div>
+  </div>
+</div>
+<!-- end: dialog add -->
+
+<!-- start: dialog edit -->
+<% teacher.forEach(function(rows){ %>
+<div class="modal fade model-edit<%= rows.ID_Teacher %>" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+
+    <!-- start: header -->
+    <header class="panel-heading">
+        <h2 class="panel-title">Sửa giảng viên</h2>
+        <p class="panel-subtitle">
+            Họ và tên: <%= rows.Name %>
+        </p>
+    </header>
+    <!-- end: header -->
+
+    <!-- start: body -->
+    <div class="modal-body">
+    <form class="form-horizontal form-bordered" action="/teacher/edit/<%= rows.ID_Teacher %>" method="POST" role="form">
+      
+      <!-- Avatar -->
+      <div class="form-group hidden">
+        <label class="col-md-3 control-label" for="Avatar">Ảnh</label>
+        <div class="col-md-7">
+          <input type="file" 
+                 class="form-control" 
+                 name="Avatar">
+        </div>
+      </div>
+
+      <!-- Name -->
+      <div class="form-group">
+          <label class="col-md-3 control-label" for="NameTeacher">Họ và Tên</label>
+          <div class="col-md-7"> 
+            <input value="<%= rows.Name %>" 
+                   type="text" 
+                   class="form-control" 
+                   name="NameTeacher" 
+                   required="required">
+          </div>
+      </div>
+
+      <!-- mã gv -->
+      <div class="form-group">
+          <label class="col-md-3 control-label" for="TeacherCode">Mã giảng viên</label>
+          <div class="col-md-7">
+            <input value="<%= rows.TeacherCode %>" 
+                   type="text"
+                  class="form-control" 
+                  name="TeacherCode" 
+                  required="required">
+          </div>
+      </div>
+
+      <!-- Ngày sinh -->
+      <div class="form-group">
+          <label class="col-md-3 control-label" for="BirthDay">Ngày sinh</label>
+          <div class="col-md-7">
+            <input value="<%= rows.BirthDay %>" 
+                   type="date" 
+                   class="form-control" 
+                   name="BirthDay" 
+                   required="required">
+          </div>
+      </div>
+
+      <!-- giới tính -->
+      <div class="form-group">
+          <label class="col-md-3 control-label" for="Sex">Giới tính</label>
+          <div class="col-md-7">
+            <select name="Sex" class="form-control">
+                <option value="<%= rows.Sex %>">
+                    <% if ((rows.Sex)=="1"){ %>
+                        Nam 
+                    <% } else { %>
+                        Nữ
+                    <% } %>
+                </option>
+                <option value="1">Nam</option>
+                <option value="2">Nữ</option>
+            </select>
+          </div>
+      </div>
+
+      <!-- Số điện thoại -->
+      <div class="form-group">
+          <label class="col-md-3 control-label" for="PhoneNumber">Số điện thoại</label>
+          <div class="col-md-7">
+            <input value="<%= rows.PhoneNumber %>" 
+                   type="number" 
+                   class="form-control" 
+                   name="PhoneNumber" 
+                   required="required">
+          </div>
+      </div>
+
+      <!-- Gmail -->
+      <div class="form-group">
+          <label class="col-md-3 control-label" for="Email">Gmail</label>
+          <div class="col-md-7">
+            <input value="<%= rows.Email %>" 
+                   type="gmail" 
+                   class="form-control" 
+                   name="Email" 
+                   required="required">
+          </div>
+      </div>
+
+      <!-- Tài khoản -->
+      <div class="form-group">
+      <label class="control-label col-md-3">Tài khoản</label>
+      <div class="col-md-7">
+        <section class="form-group-vertical">
+          <div class="input-group input-group-icon">
+            <span class="input-group-addon">
+              <span class="icon"><i class="fa fa-user"></i></span>
+            </span>
+            <input value="<%= rows.username %>" 
+                   class="form-control" 
+                   type="text" 
+                   placeholder="Username" 
+                   name="username">
+          </div>
+          <div class="input-group input-group-icon">
+            <span class="input-group-addon">
+              <span class="icon"><i class="fa fa-key"></i></span>
+            </span>
+            <input value="<%= rows.password %>" 
+                   class="form-control" 
+                   type="text" 
+                   placeholder="Password" 
+                   name="password">
+          </div>
+        </section>
+      </div>
+      </div>
+    </div>
+    <!-- end: body -->
+
+    <!-- start: footer -->
+    <footer class="panel-footer">
+        <div class="row">
+            <div class="col-sm-9 col-sm-offset-3">
+                <button type="submit" class="btn btn-primary">Save</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </footer>
+    <!-- end: footer -->
+
+    </form>
+    </div>
+  </div>
+</div>
+<% }) %>
+<!-- end: dialog edit -->
+
+
+<!-- start: dialog delete -->
+<% teacher.forEach(function(rows){ %>
+<div class="modal fade" id="Modal-Delete<%= rows.ID_Teacher %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+
+    <!-- start: header -->
+    <header class="panel-heading">
+        <h2 class="panel-title">Xóa giảng viên</h2>
+        <p class="panel-subtitle">
+            <%= rows.NameTeacher %>
+        </p>
+    </header>
+    <!-- end: header -->
+
+    <!-- start: body -->
+    <div class="panel-body" style="color: red">
+        <div class="modal-wrapper">
+            <div class="modal-icon">
+                <i style="color: red" class="fa fa-times-circle"></i>
+            </div>
+            <div class="modal-text">
+                <h4><b>Chú ý !</b></h4>
+                <p>Nếu bạn xóa giảng viên <b><%= rows.NameTeacher %></b> mọi thông tin liên quan sẽ bị xóa và không thể phục hồi.</p>
+            </div>
+        </div>
+    </div>
+    <!-- end: body -->
+
+    <!-- start: footer -->
+    <form action="/teacher/delete/<%= rows.ID_Teacher %>/<%= rows.username %>" method="POST"> 
+        <!-- BUTTON -->
+        <footer class="panel-footer">
+            <div class="row">
+                <div class="col-sm-9 col-sm-offset-3">
+                    <button type="submit" class="btn btn-primary">Đồng ý</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </footer>
+    </form>
+    <!-- end: footer -->
+    
+    </div>
+  </div>
+</div>
+<% }) %>
+<!-- end: dialog edit -->
+
+<script>
+var input = document.getElementById('input')
+
+input.addEventListener('change', function() {
+  readXlsxFile(input.files[0], { dateFormat: 'DD/MM/YY' }).then(function(data) {
+
+    $.ajax({
+      url: '/teacher/import',
+      type: 'POST',
+      dataType: 'array',
+      contentType: "application/x-www-form-urlencoded;charset=utf-8",
+      data: {param1: data}
+    })
+    .always(function() {
+      alert("Import file giảng viên !!!");
+      window.location.reload(); 
+    });
+
+  }, (error) => {
+    console.error(error)
+    alert("Error while parsing Excel file. See console output for the error stack trace.")
+  })
+})
+</script>
